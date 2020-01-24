@@ -1,0 +1,158 @@
+<!-- begin #content --> 
+<div id="content" class="content" style="padding-top: 0px">
+
+	<!-- begin submenu -->
+		<div class="row" style="margin-bottom: 10px;">
+			<div class="col-xs-3">
+				<!-- begin breadcrumb -->
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+					<li class="breadcrumb-item"><a href="javascript:;">Seguridad</a></li>
+					<li class="breadcrumb-item active"><a href="javascript:;">Grupos</a></li>
+				</ol>
+				<!-- end breadcrumb -->
+			</div>
+
+			<div class="col text-right">
+				<div class="btn-group" style="margin-left: auto;">
+				  <button class="btn btn-sm btn-white active">Autorizados</button>
+				  <!-- <button class="btn btn-sm btn-white ">Pendientes</button> -->
+				  <button class="btn btn-sm btn-white ">Pendientes Autorizar</button>
+				</div>
+				<button class="btn btn-sm btn-white" style="margin-left: 10px" ng-click="btnSearchModal()"><i class="fa fa-search"></i></button>
+				<!-- dropdown -->
+				<div class="btn-group" style="margin-left: 10px">
+					<a href="javascript:;" class="btn btn-sm btn-white">Ordenar</a>
+					<a href="" data-toggle="dropdown" class="btn btn-sm btn-white dropdown-toggle"><b class="caret"></b></a>
+					<div class="dropdown-menu dropdown-menu-right">
+						<a href="" class="dropdown-item">Nombre</a>
+						<a href="" class="dropdown-item">Fecha</a>
+					</div>
+				</div>
+				<div class="btn-group" style="margin-left: 10px">
+					<a href="javascript:;" class="btn btn-sm btn-white">Acciones</a>
+					<a href="" data-toggle="dropdown" class="btn btn-sm btn-white dropdown-toggle"><b class="caret"></b></a>
+					<div class="dropdown-menu dropdown-menu-right">
+						<a href="" class="dropdown-item">Exportar Excel</a>
+						<a href="" class="dropdown-item">Exportar PDF</a>
+					</div>
+				</div>
+				<!-- dropdown -->
+			</div>
+		</div>
+		<!-- ends submenu -->
+	
+	<h1 class="page-header">{{'menu.groups' | translate}}</h1>
+
+	<!-- begin cards panel -->
+	<div class="row">
+		
+		<!-- begin cards -->
+		<div class="col-xs-3" style="margin-bottom: 20px">
+			<div class="card border-8" style="border-top: 4px solid red;">
+				<div class="card-body">
+					<h4 class="card-title m-t-0">Grupo 001 </h4>
+					<h6 class="card-subtitle m-b-10 text-muted"><span class="label label-theme">GPR01</span></h6>
+					<p class="card-text">
+						<div> <strong>Creado por:</strong> J.J. Lopez</div>
+						<div> <strong>Creado en:</strong> 11/11/2016</div>
+						<div> <strong>Autorizado por:</strong> R. Tagliaferro</div>
+						<div> <strong>Autorizado en:</strong> 12/11/2016</div>
+					</p>
+					<!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+					<!-- <a href="javascript:;" class="card-link">Card link</a>
+					<a href="javascript:;" class="card-link">Another link</a> -->
+				</div>
+				<div class="card-footer f-w-600">
+					<div style="float: left;padding-top: 6px">
+						<a href="javascript:;" class="card-link" title="Exportar Excel"><i class="far fa-file-excel fa-lg"></i></a>
+						<a href="javascript:;" class="card-link" title="Exportar PDF" style="margin-left: 5px;"><i class="far fa-file-pdf fa-lg"></i></a>
+					</div>
+					<div>
+						<a href="" class="btn btn-danger btn-icon btn-circle" ng-click="btnRemoveCard()"><i class="fa fa-trash-alt"></i></a>
+						<a href="" class="btn btn-default btn-icon btn-circle" ng-click="btnEditModal()"><i class="fa fa-pencil-alt"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end cards -->
+
+		<!-- begin add cards -->
+		<!-- <div class="col-xs-3 text-center" style="margin-bottom: 20px;border: 2px dashed #d0d0d0;cursor: pointer;height: 219px" ng-click="btnAddCardModal()">
+			<div style="padding-top: 22%;">
+				<i class="fas fa-plus fa-5x" style="color: #d0d0d0"></i>
+			</div>
+		</div> -->
+		<!-- end add cards -->
+
+	</div>
+	<!-- end cards panel -->
+
+	<!-- Modal SEARCH INFORMATION-->
+	<div class="modal fade" id="searchModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Buscar Grupo de Programas</h4>
+					<a href="" class="btn btn-danger btn-icon btn-circle btn-xs" data-dismiss="modal"><i class="fa fa-times"></i></a>
+					<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#fff;">×</button> -->
+				</div>
+				<div class="modal-body">
+					<p>
+						Modal body content here...
+					</p>
+				</div>
+				<div class="modal-footer" style="padding: 7px;">
+					<a href="javascript:;" class="btn btn-white btn-sm" data-dismiss="modal">Canclar</a>
+					<a href="javascript:;" class="btn btn-danger btn-sm" ng-click="btnConfirmSearch()">Buscar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modal EDIT INFORMATION-->
+	<div class="modal fade" id="editModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Editar Grupo de Programas</h4>
+					<a href="" class="btn btn-danger btn-icon btn-circle btn-xs" data-dismiss="modal"><i class="fa fa-times"></i></a>
+					<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#fff;">×</button> -->
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+		                        <label for="selectVende">Nombre del Grupo</label>
+								<input type="email" class="form-control" placeholder="Nombre del Grupo" value="Grupo 001"/>
+		                      </div>
+						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+		                        <label for="selectVende">Alias del Grupo</label>
+								<input type="email" class="form-control" placeholder="Nombre del Grupo" value="GPR01"/>
+		                      </div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer" style="padding: 7px;">
+					<a href="javascript:;" class="btn btn-white btn-sm" data-dismiss="modal">Canclar</a>
+					<a href="javascript:;" class="btn btn-danger btn-sm" ng-click="btnConfirmEdit()">Guardar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- BUTTON ADD -->
+	<div class="row text-right" style="padding-right: 20px;position: fixed; bottom: 30px;right: 12px;">
+		<a href="" class="btn btn-danger btn-icon btn-circle btn-lg" ng-click="btnAddCardModal()">
+			<i class="fas fa-plus"></i>
+		</a>
+    </div>  
+
+
+</div>
+
