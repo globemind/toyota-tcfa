@@ -50,10 +50,10 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
       abstract: true
     })
     .state('app.configuration.groups', {
-      url: '/groups',
+      url: '/groups/:param',
       controller: 'groupsCtrl',
       data: {
-        pageTitle: 'Configuracion Grupos'
+        pageTitle: 'Grupo de programas'
       },
       templateUrl: 'views/configuration/groups.html',
       resolve: {

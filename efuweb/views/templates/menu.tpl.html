@@ -19,7 +19,7 @@
 							<span>{{item.descripcion}}</span>
 			        	</a>
 			        	<ul class="sub-menu" ng-if="item.nietos.length > 0" ng-repeat="subitem in item.nietos">
-			        		<li ui-sref-active="active"><a ui-sref="app.configuration.groups">{{subitem.descripcion}}</a></li>
+			        		<li ui-sref-active="active"><a ui-sref="app.configuration.groups({ param: 'all' })">{{subitem.descripcion}}</a></li>
 						</ul>
 			      	</li>
 			      	
