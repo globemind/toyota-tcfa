@@ -14,7 +14,6 @@ function MenuCtrl ($scope, $window, $cookies, $location, $rootScope, UserService
 	UserService.getMenu()
 		.then(function(response){
 			if(response.status == 200){	
-				console.log(response.data)
 				$scope.menuitems = response.data.panel_menu.padre.hijos;
 			}
 		})

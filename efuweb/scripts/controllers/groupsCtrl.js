@@ -1,5 +1,6 @@
+angular.module('mainapp').factory('GroupService', GroupService);
 
-function GroupsCtrl ($scope, $window, $cookies, $location) {
+function GroupsCtrl ($scope, $window, $cookies, $location, GroupService) {
 	
   if(angular.isUndefined($cookies.getObject('name')) || 
     angular.isUndefined($cookies.getObject('uid')) || 
@@ -11,8 +12,29 @@ function GroupsCtrl ($scope, $window, $cookies, $location) {
   var vCard = {
   	title: ''
   }
-
+  var selectedIdx = '';
  	$scope.cardCollection = [];
+  $scope.cardEdit = '';
+
+
+  GroupService.getGrupos()
+      .then(function(response){
+        if(response.status == 200){
+          $scope.cardCollection = response.data;
+        }
+      })
+    .catch(function (error) { 
+      if(error.status == 400){ $scope.$emit('error404'); }
+      else{
+          swal({
+            title: "ERROR",
+            text: error.data,
+            icon: "error",
+            // buttons: true,
+            dangerMode: true,
+          });
+      } 
+    });
 
 
   $scope.btnRemoveCard = function(idx){ 
@@ -37,8 +59,35 @@ function GroupsCtrl ($scope, $window, $cookies, $location) {
   $scope.btnSearchModal = function (){ $('#searchModal').modal('show'); }
   $scope.btnConfirmSearch = function (){ $('#searchModal').modal('hide'); }
 
-  $scope.btnEditModal = function (){ $('#editModal').modal('show'); }
-  $scope.btnConfirmEdit = function (){ $('#editModal').modal('hide'); }
+  $scope.btnEditModal = function (idx){ 
+    // selectedIdx = idx;
+    $scope.cardEdit = angular.copy($scope.cardCollection[idx]);
+    $('#editModal').modal('show'); 
+  }
+
+  $scope.btnConfirmEdit = function (){ 
+    GroupService.putGrupo($scope.cardEdit)
+      .then(function(response){
+        if(response.status == 200){
+          $('#editModal').modal('hide'); 
+        }
+      })
+    .catch(function (error) { 
+      if(error.status == 400){ $scope.$emit('error404'); }
+      else{
+          swal({
+            title: "ERROR",
+            text: error.data,
+            icon: "error",
+            // buttons: true,
+            dangerMode: true,
+          });
+      } 
+    });
+
+    
+    
+  }
 
 }
 

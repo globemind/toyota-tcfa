@@ -44,23 +44,24 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
         }]
       }
     })
-    .state('app.security', {
-      url: '/security',
+    .state('app.configuration', {
+      url: '/configuration',
       template: '<ui-view></ui-view>',
       abstract: true
     })
-    .state('app.security.groups', {
+    .state('app.configuration.groups', {
       url: '/groups',
       controller: 'groupsCtrl',
       data: {
-        pageTitle: 'Seguridad Grupos'
+        pageTitle: 'Configuracion Grupos'
       },
-      templateUrl: 'views/security/groups.html',
+      templateUrl: 'views/configuration/groups.html',
       resolve: {
         service: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load({
             serie: true,
             files: [
+              'scripts/services/groupService.js',
               'scripts/controllers/groupsCtrl.js',
             ]
           });

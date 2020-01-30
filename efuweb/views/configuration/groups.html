@@ -7,7 +7,7 @@
 				<!-- begin breadcrumb -->
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
-					<li class="breadcrumb-item"><a href="javascript:;">Seguridad</a></li>
+					<li class="breadcrumb-item"><a href="javascript:;">Configuracion</a></li>
 					<li class="breadcrumb-item active"><a href="javascript:;">Grupos</a></li>
 				</ol>
 				<!-- end breadcrumb -->
@@ -48,7 +48,34 @@
 	<div class="row">
 		
 		<!-- begin cards -->
-		<div class="col-xs-3" style="margin-bottom: 20px">
+		<div class="col-xs-3" style="margin-bottom: 20px" ng-repeat="card in cardCollection">
+			<div class="card border-8" style="border-top: 4px solid red;">
+				<div class="card-body">
+					<h4 class="card-title m-t-0">{{card.descripcion}} </h4>
+					<h6 class="card-subtitle m-b-10 text-muted"><span class="label label-theme">{{card.codigo}}</span></h6>
+					<p class="card-text">
+						<div> <strong>Creado por:</strong> {{card.creadoPor}}</div>
+						<div> <strong>Creado en:</strong> {{card.creadoEn}}</div>
+						<div> <strong>Autorizado por:</strong> {{card.autorizadoPor}}</div>
+						<div> <strong>Autorizado en:</strong> {{card.autorizadoEn}}</div>
+					</p>
+				</div>
+				<div class="card-footer f-w-600">
+					<div style="float: left;padding-top: 6px">
+						<a href="javascript:;" class="card-link" title="Exportar Excel"><i class="far fa-file-excel fa-lg"></i></a>
+						<a href="javascript:;" class="card-link" title="Exportar PDF" style="margin-left: 5px;"><i class="far fa-file-pdf fa-lg"></i></a>
+					</div>
+					<div>
+						<a href="" class="btn btn-danger btn-icon btn-circle" ng-click="btnRemoveCard($index)"><i class="fa fa-trash-alt"></i></a>
+						<a href="" class="btn btn-default btn-icon btn-circle" ng-click="btnEditModal($index)"><i class="fa fa-pencil-alt"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end cards -->
+		
+		<!-- begin cards -->
+		<!-- <div class="col-xs-3" style="margin-bottom: 20px">
 			<div class="card border-8" style="border-top: 4px solid red;">
 				<div class="card-body">
 					<h4 class="card-title m-t-0">Grupo 001 </h4>
@@ -59,9 +86,6 @@
 						<div> <strong>Autorizado por:</strong> R. Tagliaferro</div>
 						<div> <strong>Autorizado en:</strong> 12/11/2016</div>
 					</p>
-					<!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-					<!-- <a href="javascript:;" class="card-link">Card link</a>
-					<a href="javascript:;" class="card-link">Another link</a> -->
 				</div>
 				<div class="card-footer f-w-600">
 					<div style="float: left;padding-top: 6px">
@@ -74,7 +98,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<!-- end cards -->
 
 		<!-- begin add cards -->
@@ -125,13 +149,13 @@
 						<div class="col-xs-12">
 							<div class="form-group">
 		                        <label for="selectVende">Nombre del Grupo</label>
-								<input type="email" class="form-control" placeholder="Nombre del Grupo" value="Grupo 001"/>
+								<input type="email" class="form-control" placeholder="Nombre del Grupo" ng-model="cardEdit.descripcion"/>
 		                      </div>
 						</div>
 						<div class="col-xs-12">
 							<div class="form-group">
 		                        <label for="selectVende">Alias del Grupo</label>
-								<input type="email" class="form-control" placeholder="Nombre del Grupo" value="GPR01"/>
+								<input type="email" class="form-control" placeholder="Nombre del Grupo" ng-model="cardEdit.codigo"/>
 		                      </div>
 						</div>
 					</div>

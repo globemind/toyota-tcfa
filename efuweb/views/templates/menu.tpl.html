@@ -15,11 +15,11 @@
 					<li class="has-sub" class="active" ng-repeat="item in menuitems">
 				        <a href="javascript:;">
 				        	<b class="caret"></b>
-							<i class="fa fa-lock"></i>
+							<i class="{{item.icono}}"></i>
 							<span>{{item.descripcion}}</span>
 			        	</a>
 			        	<ul class="sub-menu" ng-if="item.nietos.length > 0" ng-repeat="subitem in item.nietos">
-			        		<li ui-sref-active="active"><a ui-sref="app.security.groups">{{subitem.descripcion}}</a></li>
+			        		<li ui-sref-active="active"><a ui-sref="app.configuration.groups">{{subitem.descripcion}}</a></li>
 						</ul>
 			      	</li>
 			      	
