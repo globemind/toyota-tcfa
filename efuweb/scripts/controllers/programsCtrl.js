@@ -1,6 +1,6 @@
-angular.module('mainapp').factory('GroupService', GroupService);
+angular.module('mainapp').factory('ProgramService', ProgramService);
 
-function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, GroupService) {
+function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $state, ProgramService) {
 	
   if(angular.isUndefined($cookies.getObject('name')) || 
     angular.isUndefined($cookies.getObject('uid')) || 
@@ -13,16 +13,23 @@ function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, GroupSe
   	title: ''
   }
   var selectedIdx = '';
+  $scope.resultProgram = $stateParams.program;
   $scope.resultType = $stateParams.param;
+  $scope.programInfo = {
+    name: '',
+    code: ''
+  }
  	$scope.cardCollection = [];
+  $scope.acctionsCollection = '';
   $scope.cardEdit = '';
 
   $scope.btnSearchGroups = function(){
     if($scope.resultType == 'all'){
-      GroupService.getGrupos()
+      ProgramService.getGruposTodos('T', $stateParams.program)
         .then(function(response){
           if(response.status == 200){
-            $scope.cardCollection = response.data;
+            $scope.cardCollection = response.data.datos;
+            $scope.acctionsCollection = setActions (response.data.acciones);
           }
         })
       .catch(function (error) { 
@@ -37,30 +44,14 @@ function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, GroupSe
             });
         } 
       });
-    }else if($scope.resultType == 'auth'){
-      GroupService.getGruposSLC()
+    }else{
+      var pcountType = "A";
+      if($stateParams.param == 'pend'){ pcountType = "P"; }
+      ProgramService.getGruposSLC( pcountType, $stateParams.program)
         .then(function(response){
           if(response.status == 200){
-            $scope.cardCollection = response.data;
-          }
-        })
-      .catch(function (error) { 
-        if(error.status == 400){ $scope.$emit('error404'); }
-        else{
-            swal({
-              title: "ERROR",
-              text: error.data,
-              icon: "error",
-              // buttons: true,
-              dangerMode: true,
-            });
-        } 
-      });
-    }else if($scope.resultType == 'pend'){
-      GroupService.getGruposSLC()
-        .then(function(response){
-          if(response.status == 200){
-            $scope.cardCollection = response.data;
+            $scope.cardCollection = response.data.datos;
+            $scope.acctionsCollection = setActions (response.data.acciones);
           }
         })
       .catch(function (error) { 
@@ -78,6 +69,7 @@ function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, GroupSe
     }
   }
   
+// _____________________
 
   $scope.btnRemoveCard = function(idx){ 
   	swal({
@@ -264,9 +256,43 @@ function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, GroupSe
     }
   }
 
+
+  $scope.btnFilterActions = function (pprogram, pparam){
+    $state.go('app.programs', {
+        program: pprogram,
+        param: pparam
+    });
+  }
+
   $scope.btnSearchGroups();
+
+  function setActions (collection){
+    var actionArr = {
+      alta : false,
+      modificacion : false,
+      baja : false,
+      consulta : false,
+      aprobacion : false,
+      desaprobacion : false,
+      autorizacion : false,
+      desautorizacion : false,
+    };
+
+    angular.forEach(collection, function(value, key){
+      if(value.id == 1){ actionArr.alta = true; }
+      if(value.id == 2){ actionArr.modificacion = true; }
+      if(value.id == 3){ actionArr.baja = true; }
+      if(value.id == 4){ actionArr.consulta = true; }
+      if(value.id == 5){ actionArr.aprobacion = true; }
+      if(value.id == 6){ actionArr.desaprobacion = true; }
+      if(value.id == 7){ actionArr.autorizacion = true; }
+      if(value.id == 8){ actionArr.desautorizacion = true; }
+    })
+
+    return actionArr;
+  }
 
 }
 
-angular.module('mainapp').controller('groupsCtrl', GroupsCtrl);
+angular.module('mainapp').controller('programsCtrl', ProgramsCtrl);
 

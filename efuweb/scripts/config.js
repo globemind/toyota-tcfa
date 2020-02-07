@@ -11,7 +11,7 @@ angular.module('mainapp',[
 ]);
 
 angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$translateProvider', function ($stateProvider, $urlRouterProvider, $translateProvider) {
-  $urlRouterProvider.otherwise('app/home');
+  $urlRouterProvider.otherwise('app/home/favoritos');
 
   $translateProvider.translations('en',en_translations);
   
@@ -27,17 +27,18 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
       abstract: true
     })
     .state('app.home', {
-      url: '/home',
+      url: '/home/:param',
       controller: 'homeCtrl',
       templateUrl: 'views/home/index.html',
       data: {
-        pageTitle: 'Home'
+        pageTitle: 'Inicio'
       },
       resolve: {
         service: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load({
             serie: true,
             files: [
+              'scripts/services/homeService.js',
               'scripts/controllers/homeCtrl.js',
             ]
           });
@@ -49,6 +50,7 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
       template: '<ui-view></ui-view>',
       abstract: true
     })
+   /* 
     .state('app.configuration.groups', {
       url: '/groups/:param',
       controller: 'groupsCtrl',
@@ -63,6 +65,26 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
             files: [
               'scripts/services/groupService.js',
               'scripts/controllers/groupsCtrl.js',
+            ]
+          });
+        }]
+      }
+    })*/
+
+    .state('app.programs', {
+      url: '/programs/:program/:param',
+      controller: 'programsCtrl',
+      data: {
+        pageTitle: 'Programas'
+      },
+      templateUrl: 'views/programs/index.html',
+      resolve: {
+        service: ['$ocLazyLoad', function ($ocLazyLoad) {
+          return $ocLazyLoad.load({
+            serie: true,
+            files: [
+              'scripts/services/programService.js',
+              'scripts/controllers/programsCtrl.js',
             ]
           });
         }]

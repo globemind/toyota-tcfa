@@ -1,5 +1,7 @@
 
-function HomeCtrl ($scope, $window, $cookies, $location) {
+angular.module('mainapp').factory('HomeService', HomeService);
+
+function HomeCtrl ($scope, $window, $cookies, $location, $stateParams, $state, HomeService) {
 	
   if(angular.isUndefined($cookies.getObject('name')) || 
     angular.isUndefined($cookies.getObject('uid')) || 
@@ -13,6 +15,33 @@ function HomeCtrl ($scope, $window, $cookies, $location) {
   }
 
  	$scope.cardCollection = [];
+  $scope.listType = $stateParams.param;
+
+  HomeService.getPrograms($scope.listType)
+    .then(function(response){
+      if(response.status == 200){
+        $scope.cardCollection = response.data;
+      }
+    })
+  .catch(function (error) { 
+    if(error.status == 404){ $scope.$emit('error404'); }
+    else{
+        swal({
+          title: "ERROR",
+          text: error.data,
+          icon: "error",
+          // buttons: true,
+          dangerMode: true,
+        });
+    } 
+  });
+
+  $scope.btnCountActions = function (pprogram, pparam){
+    $state.go('app.programs', {
+        program: pprogram,
+        param: pparam
+    });
+  }
 
   $scope.btnAddCardModal = function(){ $('#addCardModal').modal('show'); }
 

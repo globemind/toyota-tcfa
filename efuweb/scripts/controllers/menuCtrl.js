@@ -1,20 +1,12 @@
 
 angular.module('mainapp').factory('UserService', UserService);
 
-function MenuCtrl ($scope, $window, $cookies, $location, $rootScope, UserService) {
-
-
-	$scope.menuitems = [
-		{label: 'Home', icon: 'fa fa-th-large', link: 'app.home'},
-		{label: 'Expedientes', icon: 'fa fa-th-large', link: 'app.expedientes'},
-		{label: 'Solicitud de Reserva', icon: 'fa fa-th-large', link: 'app.reservas'},
-		{label: 'Consultar Cuenta Corriente', icon: 'fa fa-th-large', link: 'app.ctacte'},
-	];
+function MenuCtrl ($scope, $window, $cookies, $location, $rootScope, $state, UserService) {
 
 	UserService.getMenu()
 		.then(function(response){
 			if(response.status == 200){	
-				$scope.menuitems = response.data.panel_menu.padre.hijos;
+				$scope.menuitems = response.data.modulos;
 			}
 		})
 		.catch(function (error) { 
@@ -29,6 +21,13 @@ function MenuCtrl ($scope, $window, $cookies, $location, $rootScope, UserService
 	            });
 			}
 		});
+
+	$scope.btnMenuAction = function (pprogram, pparam){
+		$state.go('app.programs', {
+		    program: pprogram,
+		    param: pparam
+		});
+	}
 	
 }
 

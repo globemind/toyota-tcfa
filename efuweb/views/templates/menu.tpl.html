@@ -7,7 +7,7 @@
 				<ul class="nav">
 					<li class="nav-header">Menu</li>
 					<li ui-sref-active="active">
-				        <a ui-sref="app.home">
+				        <a ui-sref="app.home({ param: 'favoritos' })">
 							<i class="fa fa-th-large"></i>
 							<span>{{'menu.inicio' | translate}}</span>
 			        	</a>
@@ -18,8 +18,9 @@
 							<i class="{{item.icono}}"></i>
 							<span>{{item.descripcion}}</span>
 			        	</a>
-			        	<ul class="sub-menu" ng-if="item.nietos.length > 0" ng-repeat="subitem in item.nietos">
-			        		<li ui-sref-active="active"><a ui-sref="app.configuration.groups({ param: 'all' })">{{subitem.descripcion}}</a></li>
+			        	<ul class="sub-menu" ng-if="item.programas.length > 0" >
+			        		<!-- <li ui-sref-active="" ng-repeat="subitem in item.programas"><a ui-sref="app.configuration.groups({ param: 'all' })" >{{subitem.descripcion}}</a></li> -->
+			        		<li ui-sref-active="active" ng-repeat="subitem in item.programas"><a href="" ng-click="btnMenuAction(subitem.codigo,'all')" >{{subitem.descripcion}}</a></li>
 						</ul>
 			      	</li>
 			      	

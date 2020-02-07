@@ -16,8 +16,8 @@ function LoginCtrl ($scope, $window, $location, $cookies, UserService){
 
   	$scope.loading = false;
   	$scope.loginhModel = {
-  		username: '',
-  		password: '',
+  		username: 'usuario1',
+  		password: 'password',
   	}
 
   	$scope.btnLogin = function (){

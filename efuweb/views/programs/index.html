@@ -3,25 +3,25 @@
 
 	<!-- begin submenu -->
 		<div class="row" style="margin-bottom: 10px;">
-			<div class="col-xs-3">
+			<!-- <div class="col-xs-3"> -->
 				<!-- begin breadcrumb -->
-				<ol class="breadcrumb">
+				<!-- <ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
 					<li class="breadcrumb-item"><a href="javascript:;">Configuracion</a></li>
 					<li class="breadcrumb-item active"><a href="javascript:;">Grupos</a></li>
-				</ol>
+				</ol> -->
 				<!-- end breadcrumb -->
-			</div>
+			<!-- </div> -->
 
 			<div class="col text-right">
 				<div class="btn-group" style="margin-left: auto;">
-				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'all'}" ui-sref="app.configuration.groups({ param: 'all' })">Todas</button>
-				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'auth'}" ui-sref="app.configuration.groups({ param: 'auth' })">Autorizados</button>
-				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'pend'}" ui-sref="app.configuration.groups({ param: 'pend' })">Pendientes Autorizar</button>
+				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'all'}" ng-click="btnFilterActions(resultProgram, 'all')">Todas</button>
+				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'auth'}" ng-click="btnFilterActions(resultProgram, 'auth')">Autorizados</button>
+				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'pend'}" ng-click="btnFilterActions(resultProgram, 'pend')">Pendientes Autorizar</button>
 				</div>
 				<button class="btn btn-sm btn-white" style="margin-left: 10px" ng-click="btnSearchModal()"><i class="fa fa-search"></i></button>
 				<!-- dropdown -->
-				<div class="btn-group" style="margin-left: 10px">
+				<!-- <div class="btn-group" style="margin-left: 10px">
 					<a href="javascript:;" class="btn btn-sm btn-white">Ordenar</a>
 					<a href="" data-toggle="dropdown" class="btn btn-sm btn-white dropdown-toggle"><b class="caret"></b></a>
 					<div class="dropdown-menu dropdown-menu-right">
@@ -36,13 +36,14 @@
 						<a href="" class="dropdown-item">Exportar Excel</a>
 						<a href="" class="dropdown-item">Exportar PDF</a>
 					</div>
-				</div>
+				</div> -->
 				<!-- dropdown -->
 			</div>
 		</div>
 		<!-- ends submenu -->
 	
-	<h1 class="page-header">{{'menu.groups' | translate}}</h1>
+	<!-- <h1 class="page-header">{{'menu.groups' | translate}}</h1> -->
+	<h1 class="page-header">ACA DEBE HABER UN TITULOS DINAMICO</h1>
 
 	<!-- begin cards panel -->
 	<div class="row">
@@ -66,8 +67,13 @@
 						<a href="javascript:;" class="card-link" title="Exportar PDF" style="margin-left: 5px;"><i class="far fa-file-pdf fa-lg"></i></a>
 					</div>
 					<div>
-						<a href="" class="btn btn-danger btn-icon btn-circle" ng-click="btnRemoveCard($index)"><i class="fa fa-trash-alt"></i></a>
-						<a href="" class="btn btn-default btn-icon btn-circle" ng-click="btnEditModal($index)"><i class="fa fa-pencil-alt"></i></a>
+						<a href="" class="btn btn-danger btn-icon btn-circle" ng-click="btnRemoveCard($index)" ng-if="acctionsCollection.modificacion"><i class="fa fa-trash-alt"></i></a>
+						<a href="" class="btn btn-default btn-icon btn-circle" ng-click="btnEditModal($index)" ng-if="acctionsCollection.baja"><i class="fa fa-pencil-alt"></i></a>
+						<a href="" class="btn btn-danger btn-icon btn-circle" ng-click="btnRemoveCard($index)" ng-if="acctionsCollection.consulta"><i class="fa fa-trash-alt"></i></a>
+						<a href="" class="btn btn-default btn-icon btn-circle" ng-click="btnEditModal($index)" ng-if="acctionsCollection.aprobacion"><i class="fa fa-pencil-alt"></i></a>
+						<a href="" class="btn btn-danger btn-icon btn-circle" ng-click="btnRemoveCard($index)" ng-if="acctionsCollection.desaprobacion"><i class="fa fa-trash-alt"></i></a>
+						<a href="" class="btn btn-default btn-icon btn-circle" ng-click="btnEditModal($index)" ng-if="acctionsCollection.autorizacion"><i class="fa fa-pencil-alt"></i></a>
+						<a href="" class="btn btn-default btn-icon btn-circle" ng-click="btnEditModal($index)" ng-if="acctionsCollection.desautorizacion"><i class="fa fa-pencil-alt"></i></a>
 					</div>
 				</div>
 			</div>
@@ -136,7 +142,7 @@
 
 	<!-- BUTTON ADD -->
 	<div class="row text-right" style="padding-right: 20px;position: fixed; bottom: 30px;right: 12px;">
-		<a href="" class="btn btn-danger btn-icon btn-circle btn-lg" ng-click="btnAddCardModal()">
+		<a href="" class="btn btn-danger btn-icon btn-circle btn-lg" ng-click="btnAddCardModal()" ng-if="acctionsCollection.alta">
 			<i class="fas fa-plus"></i>
 		</a>
     </div>  

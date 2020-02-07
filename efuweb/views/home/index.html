@@ -16,18 +16,18 @@
 		<!-- begin submenu -->
 		<div class="row" style="margin-bottom: 10px;">
 			<div class="btn-group" style="margin-left: auto;">
-			  <button class="btn btn-sm btn-white active">Favoritos</button>
-			  <button class="btn btn-sm btn-white ">Recientes</button>
+			  <button class="btn btn-sm btn-white" ng-class="{active: listType == 'favoritos'}" ui-sref="app.home({ param: 'favoritos' })">Favoritos</button>
+			  <button class="btn btn-sm btn-white" ng-class="{active: listType == 'recientes'}" ui-sref="app.home({ param: 'recientes' })">Recientes</button>
 			</div>
 			<!-- dropdown -->
-			<div class="btn-group" style="margin-left: 20px">
+			<!-- <div class="btn-group" style="margin-left: 20px">
 				<a href="javascript:;" class="btn btn-sm btn-white">Ordenar</a>
 				<a href="#" data-toggle="dropdown" class="btn btn-sm btn-white dropdown-toggle"><b class="caret"></b></a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<a href="javascript:;" class="dropdown-item">Nombre</a>
 					<a href="javascript:;" class="dropdown-item">Fecha</a>
 				</div>
-			</div>
+			</div> -->
 			<!-- dropdown -->
 		</div>
 		<!-- ends submenu -->
@@ -42,13 +42,12 @@
 						<a href="" class="btn btn-default btn-icon btn-circle btn-xs" style="line-height: 13px;" ng-click="btnRemoveCard($index)"><i class="fa fa-times"></i></a>
 					</div>
 					<div class="card-body">
-						<h4 class="card-title m-t-0">Grupos</h4>
-						<h6 class="card-subtitle m-b-10 text-muted">Mantenimiento de los grupos de usuarios.</h6>
+						<h4 class="card-title m-t-0">{{rcard.codigo}}</h4>
+						<h6 class="card-subtitle m-b-10 text-muted">{{rcard.descripcion}}</h6>
 						<p class="card-text">
-							<div> <strong>Total:</strong> 29</div>
-							<div> <strong>Pendientes mio:</strong> 2</div>
-							<div> <strong>Para Autorizar:</strong> 3</div>
-
+							<div style="margin-bottom: 5px;cursor: pointer;" ng-click="btnCountActions(rcard.codigo, 'all')"> <strong>Total:</strong> {{rcard.cnt_total}}</div>
+							<div style="margin-bottom: 5px;cursor: pointer;" ng-click="btnCountActions(rcard.codigo, 'pend')"> <strong>Pendientes mio:</strong> {{rcard.cnt_mios}}</div>
+							<div style="cursor: pointer;" ng-click="btnCountActions(rcard.codigo, 'auth')"> <strong>Para Autorizar:</strong> {{rcard.cnt_autorizar}}</div>
 						</p>
 						<!-- <a href="javascript:;" class="card-link" title="Exportar Excel"><i class="far fa-file-excel"></i></a>
 						<a href="javascript:;" class="card-link" title="Exportar PDF"><i class="far fa-file-pdf"></i></a> -->
@@ -60,20 +59,12 @@
 						</div>
 						<div>
 							<!-- <a href="" class="btn btn-success btn-icon btn-circle"><i class="fa fa-plus"></i></a> -->
-							<a ui-sref="app.security.groups" class="btn btn-default btn-icon btn-circle"><i class="fa fa-chevron-right"></i></a>
+							<a href="" class="btn btn-default btn-icon btn-circle" ng-click="btnCountActions(rcard.codigo, 'all')"><i class="fa fa-chevron-right"></i></a>
 						</div>
 					</div>
 				</div>
 			</div>
 			<!-- end cards -->
-
-			<!-- begin add cards -->
-			<!-- <div class="col-xs-3 text-center" style="margin-bottom: 20px;border: 2px dashed #d0d0d0;cursor: pointer;height: 235px" ng-click="btnAddCardModal()">
-				<div style="padding-top: 30%;">
-					<i class="fas fa-plus fa-5x" style="color: #d0d0d0"></i>
-				</div>
-			</div> -->
-			<!-- end add cards -->
 		</div>
 		<!-- end cards panel -->
 	</div>
