@@ -20,7 +20,7 @@
 			        	</a>
 			        	<ul class="sub-menu" ng-if="item.programas.length > 0" >
 			        		<!-- <li ui-sref-active="" ng-repeat="subitem in item.programas"><a ui-sref="app.configuration.groups({ param: 'all' })" >{{subitem.descripcion}}</a></li> -->
-			        		<li ui-sref-active="active" ng-repeat="subitem in item.programas"><a href="" ng-click="btnMenuAction(subitem.codigo,'all')" >{{subitem.descripcion}}</a></li>
+			        		<li ui-sref-active="active" ng-repeat="subitem in item.programas"><a href="" ng-click="btnMenuAction(subitem.codigo,'all', subitem.id)" >{{subitem.descripcion}}</a></li>
 						</ul>
 			      	</li>
 			      	

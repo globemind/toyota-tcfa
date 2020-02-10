@@ -22,7 +22,9 @@ function MenuCtrl ($scope, $window, $cookies, $location, $rootScope, $state, Use
 			}
 		});
 
-	$scope.btnMenuAction = function (pprogram, pparam){
+	$scope.btnMenuAction = function (pprogram, pparam, id){
+
+		UserService.setProgramasRecientes(id);
 		$state.go('app.programs', {
 		    program: pprogram,
 		    param: pparam

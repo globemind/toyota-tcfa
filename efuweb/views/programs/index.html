@@ -15,9 +15,9 @@
 
 			<div class="col text-right">
 				<div class="btn-group" style="margin-left: auto;">
-				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'all'}" ng-click="btnFilterActions(resultProgram, 'all')">Todas</button>
-				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'auth'}" ng-click="btnFilterActions(resultProgram, 'auth')">Autorizados</button>
-				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'pend'}" ng-click="btnFilterActions(resultProgram, 'pend')">Pendientes Autorizar</button>
+				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'all'}" ng-click="btnFilterActions(resultProgram, 'all')">Todos</button>
+				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'pend'}" ng-click="btnFilterActions(resultProgram, 'pend')">Pendientes</button>
+				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'auth'}" ng-click="btnFilterActions(resultProgram, 'auth')">A Autorizar</button>
 				</div>
 				<button class="btn btn-sm btn-white" style="margin-left: 10px" ng-click="btnSearchModal()"><i class="fa fa-search"></i></button>
 				<!-- dropdown -->
@@ -42,8 +42,8 @@
 		</div>
 		<!-- ends submenu -->
 	
-	<!-- <h1 class="page-header">{{'menu.groups' | translate}}</h1> -->
-	<h1 class="page-header">ACA DEBE HABER UN TITULOS DINAMICO</h1>
+	<h1 class="page-header">{{programInfo.name}}</h1>
+	<!-- <h1 class="page-header">ACA DEBE HABER UN TITULOS DINAMICO</h1> -->
 
 	<!-- begin cards panel -->
 	<div class="row">
@@ -69,7 +69,7 @@
 					<div>
 						<a href="" class="btn btn-danger btn-icon btn-circle" ng-click="btnRemoveCard($index)" ng-if="acctionsCollection.modificacion"><i class="fa fa-trash-alt"></i></a>
 						<a href="" class="btn btn-default btn-icon btn-circle" ng-click="btnEditModal($index)" ng-if="acctionsCollection.baja"><i class="fa fa-pencil-alt"></i></a>
-						<a href="" class="btn btn-danger btn-icon btn-circle" ng-click="btnRemoveCard($index)" ng-if="acctionsCollection.consulta"><i class="fa fa-trash-alt"></i></a>
+						<a href="" class="btn btn-danger btn-icon btn-circle" ng-click="btnRemoveCard($index)" ng-if="acctionsCollection.consulta"><i class="fas fa-search"></i></a>
 						<a href="" class="btn btn-default btn-icon btn-circle" ng-click="btnEditModal($index)" ng-if="acctionsCollection.aprobacion"><i class="fa fa-pencil-alt"></i></a>
 						<a href="" class="btn btn-danger btn-icon btn-circle" ng-click="btnRemoveCard($index)" ng-if="acctionsCollection.desaprobacion"><i class="fa fa-trash-alt"></i></a>
 						<a href="" class="btn btn-default btn-icon btn-circle" ng-click="btnEditModal($index)" ng-if="acctionsCollection.autorizacion"><i class="fa fa-pencil-alt"></i></a>

@@ -45,9 +45,9 @@
 						<h4 class="card-title m-t-0">{{rcard.codigo}}</h4>
 						<h6 class="card-subtitle m-b-10 text-muted">{{rcard.descripcion}}</h6>
 						<p class="card-text">
-							<div style="margin-bottom: 5px;cursor: pointer;" ng-click="btnCountActions(rcard.codigo, 'all')"> <strong>Total:</strong> {{rcard.cnt_total}}</div>
-							<div style="margin-bottom: 5px;cursor: pointer;" ng-click="btnCountActions(rcard.codigo, 'pend')"> <strong>Pendientes mio:</strong> {{rcard.cnt_mios}}</div>
-							<div style="cursor: pointer;" ng-click="btnCountActions(rcard.codigo, 'auth')"> <strong>Para Autorizar:</strong> {{rcard.cnt_autorizar}}</div>
+							<div style="margin-bottom: 5px;cursor: pointer;" ng-click="btnCountActions(rcard.codigo, 'all', rcard.id)"> <strong>Total:</strong> {{rcard.cnt_total}}</div>
+							<div style="margin-bottom: 5px;cursor: pointer;" ng-click="btnCountActions(rcard.codigo, 'pend', rcard.id)"> <strong>Pendientes mio:</strong> {{rcard.cnt_mios}}</div>
+							<div style="cursor: pointer;" ng-click="btnCountActions(rcard.codigo, 'auth', rcard.id)"> <strong>Para Autorizar:</strong> {{rcard.cnt_autorizar}}</div>
 						</p>
 						<!-- <a href="javascript:;" class="card-link" title="Exportar Excel"><i class="far fa-file-excel"></i></a>
 						<a href="javascript:;" class="card-link" title="Exportar PDF"><i class="far fa-file-pdf"></i></a> -->
@@ -59,7 +59,7 @@
 						</div>
 						<div>
 							<!-- <a href="" class="btn btn-success btn-icon btn-circle"><i class="fa fa-plus"></i></a> -->
-							<a href="" class="btn btn-default btn-icon btn-circle" ng-click="btnCountActions(rcard.codigo, 'all')"><i class="fa fa-chevron-right"></i></a>
+							<a href="" class="btn btn-default btn-icon btn-circle" ng-click="btnCountActions(rcard.codigo, 'all', rcard.id)"><i class="fa fa-chevron-right"></i></a>
 						</div>
 					</div>
 				</div>
@@ -81,7 +81,11 @@
 				</div>
 				<div class="modal-body">
 					<p>
-						Modal body content here...
+						<div class="form-group">
+                        	<label>Seleccione un Programa </label>
+	                        <select class="form-control input-sm" ng-model="addProgram" ng-options="prg.descripcion for prg in programsCollection track by prg.id" >
+	                        </select> 
+	                    </div>
 					</p>
 				</div>
 				<div class="modal-footer" style="padding: 7px;">

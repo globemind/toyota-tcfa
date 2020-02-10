@@ -23,6 +23,24 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
   $scope.acctionsCollection = '';
   $scope.cardEdit = '';
 
+  ProgramService.getTitiuloPrograma($stateParams.program)
+        .then(function(response){
+          if(response.status == 200){ $scope.programInfo.name = response.data; }
+        })
+      .catch(function (error) { 
+        if(error.status == 400){ $scope.$emit('error404'); }
+        else{
+            swal({
+              title: "ERROR",
+              text: error.data,
+              icon: "error",
+              // buttons: true,
+              dangerMode: true,
+            });
+        } 
+      });
+
+
   $scope.btnSearchGroups = function(){
     if($scope.resultType == 'all'){
       ProgramService.getGruposTodos('T', $stateParams.program)
@@ -282,11 +300,11 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
       if(value.id == 1){ actionArr.alta = true; }
       if(value.id == 2){ actionArr.modificacion = true; }
       if(value.id == 3){ actionArr.baja = true; }
-      if(value.id == 4){ actionArr.consulta = true; }
+      if(value.id == 8){ actionArr.consulta = true; }
       if(value.id == 5){ actionArr.aprobacion = true; }
       if(value.id == 6){ actionArr.desaprobacion = true; }
       if(value.id == 7){ actionArr.autorizacion = true; }
-      if(value.id == 8){ actionArr.desautorizacion = true; }
+      if(value.id == 88){ actionArr.desautorizacion = true; }
     })
 
     return actionArr;

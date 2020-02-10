@@ -10,6 +10,17 @@ function ProgramService ($http, $location, $cookies) {
 		return  $http.get(apiUrl+'api/Grupos/', config);
 	};
 
+	programsResponse.getTitiuloPrograma = function (pprograma) {
+		return  $http.get(apiUrl+'api/PanelMenu/tituloprograma/'+pprograma, config);
+	};
+
+	programsResponse.setProgramasRecientes = function (id) {
+		var model = {
+			"idAccPrograma": id
+			}
+		return  $http.post(apiUrl+'api/ProgramasRecientes/', model, config);
+	};
+
 	//TODOS
 	programsResponse.getGruposTodos = function (porigen, pprograma) {
 		return  $http.get(apiUrl+'api/Grupos?origen='+porigen+'&programa='+pprograma, config);

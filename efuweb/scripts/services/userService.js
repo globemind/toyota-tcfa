@@ -14,5 +14,10 @@ function UserService ($http, $location, $cookies) {
 		return  $http.get(apiUrl+'api/PanelMenu/', config);
 	};
 
+	userResponse.setProgramasRecientes = function (id) {
+		var model = { "idAccPrograma": id }
+		return  $http.post(apiUrl+'api/ProgramasRecientes/', model, config);
+	};
+
 	return userResponse;
 }
