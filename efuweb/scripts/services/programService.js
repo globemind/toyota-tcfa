@@ -26,7 +26,7 @@ function ProgramService ($http, $location, $cookies) {
 		return  $http.get(apiUrl+'api/Grupos?origen='+porigen+'&programa='+pprograma, config);
 	};
 
-	/*programsResponse.getGrupoById = function (id) {
+	programsResponse.getGrupoById = function (id) {
 		return  $http.get(apiUrl+'api/Grupos/'+id, config);
 	};
 
@@ -38,15 +38,16 @@ function ProgramService ($http, $location, $cookies) {
 		return  $http.delete(apiUrl+'api/Grupos/'+model.id, config);
 	};
 
-	programsResponse.getGruposSLC = function () {
-		return  $http.get(apiUrl+'api/GruposSLC/', config);
-	};*/
 
 	//SLC
 	programsResponse.getGruposSLC = function (porigen, pprograma) {
 		return  $http.get(apiUrl+'api/GruposSLC?origen='+porigen+'&programa='+pprograma, config);
 	};
-/*
+
+	programsResponse.getGruposSLC = function () {
+		return  $http.get(apiUrl+'api/GruposSLC/', config);
+	};
+
 	//AUTORIZR
 	programsResponse.getGruposAuth = function () {
 		return  $http.get(apiUrl+'api/GruposSLC/autorizar', config);
@@ -62,7 +63,15 @@ function ProgramService ($http, $location, $cookies) {
 
 	programsResponse.deleteGrupoSLC = function (model) {
 		return  $http.delete(apiUrl+'api/GruposSLC/eliminar/'+model.id, config);
-	};*/
+	};
+
+	programsResponse.deleteGrupoSLCAuth = function (model) {
+		return  $http.delete(apiUrl+'api/GruposSLC/autorizar/'+model.id, config);
+	};
+
+	programsResponse.deleteGrupoSLCDesAuth = function (model) {
+		return  $http.delete(apiUrl+'api/GruposSLC/desautorizar/'+model.id, config);
+	};
 
 	return programsResponse;
 }

@@ -89,7 +89,7 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
   
 // _____________________
 
-  $scope.btnRemoveCard = function(idx){ 
+  $scope.btnRemoveCard = function(idx, action){ 
   	swal({
       title: "Ud. esta seguro?",
       text: "Una vez eliminada no se podra recuperar la informacion!",
@@ -99,7 +99,7 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
     })
     .then((willDelete) => {
       if (willDelete) { // DELETE
-        if($scope.resultType == 'all'){
+        if(action == 3){
           GroupService.deleteGrupo($scope.cardCollection[idx])
             .then(function(response){
               if(response.status != 200){
@@ -124,7 +124,7 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
                   });
               } 
             });
-        }else if($scope.resultType == 'auth'){
+        }else if(action == 5){
           GroupService.deleteGrupoSLC($scope.cardCollection[idx])
             .then(function(response){
               if(response.status != 200){
@@ -149,8 +149,33 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
                   });
               } 
             });
-        }else if($scope.resultType == 'pend'){
-          GroupService.deleteGrupoSLC($scope.cardCollection[idx])
+        }else if(action == 6){
+          GroupService.deleteGrupoSLCAuth($scope.cardCollection[idx])
+            .then(function(response){
+              if(response.status != 200){
+                swal({
+                  title: "Atencion",
+                  text: response.statusText,
+                  icon: "warning",
+                  buttons: true,
+                  // dangerMode: true,
+                })
+              }else{$window.location.reload();}
+            })
+            .catch(function (error) { 
+              if(error.status == 400){ $scope.$emit('error404'); }
+              else{
+                  swal({
+                    title: "ERROR",
+                    text: error.data,
+                    icon: "error",
+                    // buttons: true,
+                    dangerMode: true,
+                  });
+              } 
+            });
+        }else if(action == 7){
+          GroupService.deleteGrupoSLCDesAuth($scope.cardCollection[idx])
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -184,13 +209,14 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
   $scope.btnSearchModal = function (){ $('#searchModal').modal('show'); }
   $scope.btnConfirmSearch = function (){ $('#searchModal').modal('hide'); }
 
-  $scope.btnEditModal = function (idx){ 
+  $scope.btnEditModal = function (idx, action){ 
     $scope.cardEdit = angular.copy($scope.cardCollection[idx]);
+    $scope.actionSelected = action;
     $('#editModal').modal('show'); 
   }
 
-  $scope.btnConfirmEdit = function (){ 
-    if($scope.resultType == 'all'){
+  $scope.btnConfirmEdit = function (action){ 
+    if(action == 2){
       GroupService.putGrupo($scope.cardEdit)
         .then(function(response){
           if(response.status == 200){
@@ -217,34 +243,7 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
               });
           } 
         });
-    }else if($scope.resultType == 'auth'){
-      GroupService.putGrupoSLC($scope.cardEdit)
-        .then(function(response){
-          if(response.status == 200){
-            $('#editModal').modal('hide'); 
-          }else{
-            swal({
-              title: "Atencion",
-              text: response.statusText,
-              icon: "warning",
-              buttons: true,
-              // dangerMode: true,
-            })
-          }
-        })
-        .catch(function (error) { 
-          if(error.status == 400){ $scope.$emit('error404'); }
-          else{
-              swal({
-                title: "ERROR",
-                text: error.data,
-                icon: "error",
-                // buttons: true,
-                dangerMode: true,
-              });
-          } 
-        });
-    }else if($scope.resultType == 'pend'){
+    }else if(action == 4){
       GroupService.putGrupoSLC($scope.cardEdit)
         .then(function(response){
           if(response.status == 200){
@@ -294,17 +293,18 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
       desaprobacion : false,
       autorizacion : false,
       desautorizacion : false,
+      selected: ''
     };
 
     angular.forEach(collection, function(value, key){
       if(value.id == 1){ actionArr.alta = true; }
       if(value.id == 2){ actionArr.modificacion = true; }
       if(value.id == 3){ actionArr.baja = true; }
+      if(value.id == 4){ actionArr.modificacion_pend = true; }
+      if(value.id == 5){ actionArr.baja_pend = true; }
+      if(value.id == 6){ actionArr.autorizacion = true; }
+      if(value.id == 7){ actionArr.desautorizacion = true; }
       if(value.id == 8){ actionArr.consulta = true; }
-      if(value.id == 5){ actionArr.aprobacion = true; }
-      if(value.id == 6){ actionArr.desaprobacion = true; }
-      if(value.id == 7){ actionArr.autorizacion = true; }
-      if(value.id == 88){ actionArr.desautorizacion = true; }
     })
 
     return actionArr;
