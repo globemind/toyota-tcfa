@@ -50,14 +50,14 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
       template: '<ui-view></ui-view>',
       abstract: true
     })
-   /* 
+    
     .state('app.configuration.groups', {
       url: '/groups/:param',
       controller: 'groupsCtrl',
       data: {
         pageTitle: 'Grupo de programas'
       },
-      templateUrl: 'views/configuration/groups.html',
+      templateUrl: 'views/groups/index.html',
       resolve: {
         service: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load({
@@ -69,9 +69,9 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
           });
         }]
       }
-    })*/
+    })
 
-    .state('app.programs', {
+    /*.state('app.programs', {
       url: '/programs/:program/:param',
       controller: 'programsCtrl',
       data: {
@@ -89,7 +89,7 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
           });
         }]
       }
-    })
+    })*/
 
 }]);
 

@@ -44,9 +44,9 @@ function ProgramService ($http, $location, $cookies) {
 		return  $http.get(apiUrl+'api/GruposSLC?origen='+porigen+'&programa='+pprograma, config);
 	};
 
-	programsResponse.getGruposSLC = function () {
+/*	programsResponse.getGruposSLC = function () {
 		return  $http.get(apiUrl+'api/GruposSLC/', config);
-	};
+	};*/
 
 	//AUTORIZR
 	programsResponse.getGruposAuth = function () {

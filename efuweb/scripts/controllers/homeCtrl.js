@@ -42,10 +42,9 @@ function HomeCtrl ($scope, $window, $cookies, $location, $stateParams, $state, H
 
   $scope.btnCountActions = function (pprogram, pparam, id){
     HomeService.setProgramasRecientes(id);
-    $state.go('app.programs', {
-        program: pprogram,
-        param: pparam
-    });
+    $state.go('app.configuration.groups', {
+          param: pparam
+      });
   }
 
   $scope.btnAddCardModal = function(){ $('#addCardModal').modal('show'); }

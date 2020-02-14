@@ -1,6 +1,6 @@
-angular.module('mainapp').factory('ProgramService', ProgramService);
+angular.module('mainapp').factory('GroupService', GroupService);
 
-function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $state, ProgramService) {
+function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, $state, GroupService) {
 	
   if(angular.isUndefined($cookies.getObject('name')) || 
     angular.isUndefined($cookies.getObject('uid')) || 
@@ -13,37 +13,15 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
   	title: ''
   }
   var selectedIdx = '';
-  $scope.resultProgram = $stateParams.program;
   $scope.resultType = $stateParams.param;
-  $scope.programInfo = {
-    name: '',
-    code: ''
-  }
  	$scope.cardCollection = [];
   $scope.acctionsCollection = '';
   $scope.cardEdit = '';
 
-  ProgramService.getTitiuloPrograma($stateParams.program)
-        .then(function(response){
-          if(response.status == 200){ $scope.programInfo.name = response.data; }
-        })
-      .catch(function (error) { 
-        if(error.status == 400){ $scope.$emit('error404'); }
-        else{
-            swal({
-              title: "ERROR",
-              text: error.data,
-              icon: "error",
-              // buttons: true,
-              dangerMode: true,
-            });
-        } 
-      });
-
 
   $scope.btnSearchGroups = function(){
     if($scope.resultType == 'all'){
-      ProgramService.getGruposTodos('T', $stateParams.program)
+      GroupService.getGruposTodos('T', 'grp001')
         .then(function(response){
           if(response.status == 200){
             $scope.cardCollection = response.data.datos;
@@ -65,7 +43,7 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
     }else{
       var pcountType = "A";
       if($stateParams.param == 'pend'){ pcountType = "P"; }
-      ProgramService.getGruposSLC( pcountType, $stateParams.program)
+      GroupService.getGruposSLC( pcountType, 'grp001')
         .then(function(response){
           if(response.status == 200){
             $scope.cardCollection = response.data.datos;
@@ -125,7 +103,7 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
               } 
             });
         }else if(action == 5){
-          GroupService.deleteGrupoSLC($scope.cardCollection[idx])
+          GroupService.deleteGrupoSLC($scope.cardCollection[idx], 'eliminar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -150,7 +128,7 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
               } 
             });
         }else if(action == 6){
-          GroupService.deleteGrupoSLCAuth($scope.cardCollection[idx])
+          GroupService.deleteGrupoSLC($scope.cardCollection[idx], 'autorizar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -175,7 +153,7 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
               } 
             });
         }else if(action == 7){
-          GroupService.deleteGrupoSLCDesAuth($scope.cardCollection[idx])
+          GroupService.deleteGrupoSLC($scope.cardCollection[idx], 'desautorizar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -219,7 +197,8 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
     if(action == 2){
       GroupService.putGrupo($scope.cardEdit)
         .then(function(response){
-          if(response.status == 200){
+          if(response.status >= 200 && response.status < 300 ){
+            $window.location.reload();
             $('#editModal').modal('hide'); 
           }else{
             swal({
@@ -246,7 +225,8 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
     }else if(action == 4){
       GroupService.putGrupoSLC($scope.cardEdit)
         .then(function(response){
-          if(response.status == 200){
+          if(response.status >= 200 && response.status < 300 ){
+            $window.location.reload();
             $('#editModal').modal('hide'); 
           }else{
             swal({
@@ -274,9 +254,8 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
   }
 
 
-  $scope.btnFilterActions = function (pprogram, pparam){
-    $state.go('app.programs', {
-        program: pprogram,
+  $scope.btnFilterActions = function (pparam){
+    $state.go('app.configuration.groups', {
         param: pparam
     });
   }
@@ -312,5 +291,5 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
 
 }
 
-angular.module('mainapp').controller('programsCtrl', ProgramsCtrl);
+angular.module('mainapp').controller('groupsCtrl', GroupsCtrl);
 

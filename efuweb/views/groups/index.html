@@ -15,9 +15,9 @@
 
 			<div class="col text-right">
 				<div class="btn-group" style="margin-left: auto;">
-				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'all'}" ng-click="btnFilterActions(resultProgram, 'all')">Todos</button>
-				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'pend'}" ng-click="btnFilterActions(resultProgram, 'pend')">Pendientes</button>
-				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'auth'}" ng-click="btnFilterActions(resultProgram, 'auth')">A Autorizar</button>
+				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'all'}" ng-click="btnFilterActions('all')">Todos</button>
+				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'pend'}" ng-click="btnFilterActions('pend')">Pendientes</button>
+				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'auth'}" ng-click="btnFilterActions('auth')">A Autorizar</button>
 				</div>
 				<button class="btn btn-sm btn-white" style="margin-left: 10px" ng-click="btnSearchModal()"><i class="fa fa-search"></i></button>
 				<!-- dropdown -->
@@ -42,8 +42,7 @@
 		</div>
 		<!-- ends submenu -->
 	
-	<h1 class="page-header">{{programInfo.name}}</h1>
-	<!-- <h1 class="page-header">ACA DEBE HABER UN TITULOS DINAMICO</h1> -->
+	<h1 class="page-header">ABM de Grupos</h1>
 
 	<!-- begin cards panel -->
 	<div class="row">
