@@ -184,6 +184,73 @@ function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, $state,
     });
   }
 
+  $scope.btnRemoveCard = function(idx, action){ 
+    swal({
+      title: "¿Esta seguro de autorizar esta modificación?",
+      text: "",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) { // DELETE
+        if(action == 6){
+          GroupService.deleteGrupoSLC($scope.cardCollection[idx], 'autorizar')
+            .then(function(response){
+              if(response.status != 200){
+                swal({
+                  title: "Atencion",
+                  text: response.statusText,
+                  icon: "warning",
+                  buttons: true,
+                  // dangerMode: true,
+                })
+              }else{$window.location.reload();}
+            })
+            .catch(function (error) { 
+              if(error.status == 400){ $scope.$emit('error404'); }
+              else{
+                  swal({
+                    title: "ERROR",
+                    text: error.data,
+                    icon: "error",
+                    // buttons: true,
+                    dangerMode: true,
+                  });
+              } 
+            });
+        }else if(action == 7){
+          GroupService.deleteGrupoSLC($scope.cardCollection[idx], 'desautorizar')
+            .then(function(response){
+              if(response.status != 200){
+                swal({
+                  title: "Atencion",
+                  text: response.statusText,
+                  icon: "warning",
+                  buttons: true,
+                  // dangerMode: true,
+                })
+              }else{$window.location.reload();}
+            })
+            .catch(function (error) { 
+              if(error.status == 400){ $scope.$emit('error404'); }
+              else{
+                  swal({
+                    title: "ERROR",
+                    text: error.data,
+                    icon: "error",
+                    // buttons: true,
+                    dangerMode: true,
+                  });
+              } 
+            });
+        }
+      } /*else { 
+        swal("Your imaginary file is safe!");
+      }*/
+    });
+  }
+
   $scope.btnSearchModal = function (){ $('#searchModal').modal('show'); }
   $scope.btnConfirmSearch = function (){ $('#searchModal').modal('hide'); }
 
