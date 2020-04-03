@@ -70,6 +70,26 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
         }]
       }
     })
+    
+    .state('app.configuration.profiles', {
+      url: '/profiles/:param',
+      controller: 'profilesCtrl',
+      data: {
+        pageTitle: 'Perfiles'
+      },
+      templateUrl: 'views/profiles/index.html',
+      resolve: {
+        service: ['$ocLazyLoad', function ($ocLazyLoad) {
+          return $ocLazyLoad.load({
+            serie: true,
+            files: [
+              'scripts/services/profileService.js',
+              'scripts/controllers/profilesCtrl.js',
+            ]
+          });
+        }]
+      }
+    })
 
     /*.state('app.programs', {
       url: '/programs/:program/:param',

@@ -26,9 +26,9 @@ function MenuCtrl ($scope, $window, $cookies, $location, $rootScope, $state, Use
 
 		UserService.setProgramasRecientes(id);
 		if(pprogram == 'grp001'){
-			$state.go('app.configuration.groups', {
-			    param: pparam
-			});
+			$state.go('app.configuration.groups', { param: pparam });
+		}else if(pprogram == 'prf001'){
+			$state.go('app.configuration.profiles', { param: pparam });
 		}
 		
 	}
