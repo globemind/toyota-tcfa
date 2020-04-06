@@ -369,6 +369,51 @@ function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, $state,
     });
   }
 
+  $scope.btnAddCardModal = function (){ 
+    $scope.newModel = {
+      descripcion: '',
+      codigo: '',
+    }
+    $('#newModal').modal('show'); 
+  } 
+
+  $scope.btnConfirmNew = function (){ 
+    if(validateNewForm()){
+      GroupService.setGrupoSLC($scope.newModel)
+        .then(function(response){
+          if(response.status >= 200 && response.status < 300 ){
+            $window.location.reload();
+            $('#newModal').modal('hide');
+          }else{
+            swal({
+              title: "Atencion",
+              text: response.statusText,
+              icon: "warning",
+              buttons: true,
+            })
+          }
+        })
+        .catch(function (error) { 
+          if(error.status == 400){ $scope.$emit('error404'); }
+          else{
+              swal({
+                title: "ERROR",
+                text: error.data,
+                icon: "error",
+                dangerMode: true,
+              });
+          } 
+        });
+    }else{
+      swal({
+        title: "ERROR",
+        text: 'Debe completar todos los campos!',
+        icon: "error",
+        dangerMode: true,
+      });
+    }
+  } 
+
   $scope.btnSearchGroups();
 
   function setActions (collection){
@@ -396,6 +441,15 @@ function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, $state,
     })
 
     return actionArr;
+  }
+
+  function validateNewForm (){
+    var rta = true;
+
+    if($scope.newModel.codigo == '' || angular.isUndefined($scope.newModel.codigo) || $scope.newModel.codigo == null) { rta = false;}
+    if($scope.newModel.descripcion == '' || angular.isUndefined($scope.newModel.descripcion) || $scope.newModel.descripcion == null) { rta = false;}
+
+    return rta;
   }
 
 }

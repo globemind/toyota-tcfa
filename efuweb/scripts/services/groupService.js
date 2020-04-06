@@ -36,6 +36,10 @@ function GroupService ($http, $location, $cookies) {
 		return  $http.put(apiUrl+'api/GruposSLC/'+model.id, model, config);
 	};
 
+	groupsResponse.setGrupoSLC = function (model) {
+		return  $http.post(apiUrl+'api/GruposSLC/', model, config);
+	};
+
 
 	return groupsResponse;
 }

@@ -36,6 +36,10 @@ function ProfileService ($http, $location, $cookies) {
 		return  $http.put(apiUrl+'api/PerfilesSLC/'+model.id, model, config);
 	};
 
+	response.setPerfileSLC = function (model) {
+		return  $http.post(apiUrl+'api/PerfilesSLC/', model, config);
+	};
+
 
 	return response;
 }  

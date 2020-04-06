@@ -139,6 +139,39 @@
 		</div>
 	</div>
 
+	<!-- Modal NEW-->
+	<div class="modal fade" id="newModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Nuevo Grupo</h4>
+					<a href="" class="btn btn-danger btn-icon btn-circle btn-xs" data-dismiss="modal"><i class="fa fa-times"></i></a>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+		                        <label for="selectVende">Nombre del Grupo</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Grupo" ng-model="newModel.descripcion"/>
+		                      </div>
+						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+		                        <label for="selectVende">Alias del Grupo</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Alias del Grupo" ng-model="newModel.codigo"/>
+		                      </div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer" style="padding: 7px;">
+					<a href="javascript:;" class="btn btn-white btn-sm" data-dismiss="modal">Cancelar</a>
+					<a href="javascript:;" class="btn btn-danger btn-sm" ng-click="btnConfirmNew()">Guardar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 
 
 	<!-- BUTTON ADD -->
