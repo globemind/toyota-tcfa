@@ -90,6 +90,26 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
         }]
       }
     })
+    
+    .state('app.configuration.modules', {
+      url: '/modules/:param',
+      controller: 'modulesCtrl',
+      data: {
+        pageTitle: 'Modulos'
+      },
+      templateUrl: 'views/modules/index.html',
+      resolve: {
+        service: ['$ocLazyLoad', function ($ocLazyLoad) {
+          return $ocLazyLoad.load({
+            serie: true,
+            files: [
+              'scripts/services/moduloService.js',
+              'scripts/controllers/modulesCtrl.js',
+            ]
+          });
+        }]
+      }
+    })
 
     /*.state('app.programs', {
       url: '/programs/:program/:param',
