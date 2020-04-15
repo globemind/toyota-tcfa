@@ -308,12 +308,12 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
     $scope.cardEdit = angular.copy($scope.cardCollection[idx]); 
     $scope.moduleSelected = '';
     $scope.actionSelected = action;
+    $scope.modulesCollection  = $filter('filter')(modulesArr, function(value){
+      return value.id != $scope.cardEdit.id;
+    });
     if($scope.cardEdit.idAccModulo != null){
       $scope.moduleSelected = $scope.cardEdit.idAccModuloNavigation;
-      $scope.modulesCollection  = $filter('filter')(modulesArr, function(value){
-        return value.id != $scope.cardEdit.id;
-      });
-    }else{ $scope.modulesCollection = modulesArr; }
+    }
     $('#editModal').modal('show'); 
   }
 
