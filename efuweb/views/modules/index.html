@@ -122,21 +122,19 @@
 						<div class="col-xs-12">
 							<div class="form-group">
 		                        <label for="selectVende">Nombre del Modulo</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Modulo" ng-model="cardEdit.descripcion" ng-disabled="actionSelected != 2"/>
+								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Modulo" ng-model="cardEdit.descripcion" ng-disabled="actionSelected != 2 && actionSelected != 4 "/>
 		                      </div>
 						</div>
 						<div class="col-xs-12">
 							<div class="form-group">
 		                        <label for="selectVende">Alias del Modulo</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Alias del Modulo" ng-model="cardEdit.codigo" ng-disabled="actionSelected != 2"/>
+								<input type="text" class="form-control form-control-sm" placeholder="Alias del Modulo" ng-model="cardEdit.codigo" ng-disabled="actionSelected != 2 && actionSelected != 4 "/>
 		                      </div>
 						</div>
 						<div class="col-xs-12">
 							<div class="form-group">
 		                        <label for="selectVende">Modulo Padre</label>
-								<!-- <input type="text" class="form-control form-control-sm" placeholder="Alias del Modulo" ng-model="cardEdit.codigo" ng-disabled="actionSelected != 2"/> -->
-								<select class="form-control input-sm" ng-model="moduleSelected" ng-options="module.descripcion for module in modulesCollection track by module.id"  ng-disabled="actionSelected != 2">
-		                          
+								<select class="form-control input-sm" ng-model="moduleSelected" ng-options="module.descripcion for module in modulesCollection track by module.id"  ng-disabled="actionSelected != 2 && actionSelected != 4 ">
 		                        </select> 
 		                      </div>
 						</div>
