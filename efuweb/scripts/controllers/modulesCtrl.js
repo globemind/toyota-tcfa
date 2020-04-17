@@ -318,7 +318,7 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
   }
 
   $scope.btnConfirmEdit = function (action){ 
-    $scope.cardEdit.idAccModuloNavigation = $scope.moduleSelected;
+    // $scope.cardEdit.idAccModuloNavigation = $scope.moduleSelected;
     $scope.cardEdit.idAccModulo = $scope.moduleSelected.id;
     if(action == 2){
       ModuloService.putModulo($scope.cardEdit)
