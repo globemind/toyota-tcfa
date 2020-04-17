@@ -390,7 +390,9 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
     $scope.newModel = {
       descripcion: '',
       codigo: '',
+      idAccModuloNavigation: '',
     }
+    $scope.modulesCollection  = modulesArr;
     $('#newModal').modal('show'); 
   } 
 
