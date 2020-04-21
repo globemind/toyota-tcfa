@@ -312,7 +312,7 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
       return value.id != $scope.cardEdit.id;
     });
     if($scope.cardEdit.idAccModulo != null){
-      $scope.moduleSelected = $scope.cardEdit.idAccModuloNavigation;
+      $scope.moduleSelected = {id: $scope.cardEdit.idAccModulo, descripcion: ''};
     }
     $('#editModal').modal('show'); 
   }
