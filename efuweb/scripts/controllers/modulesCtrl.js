@@ -304,7 +304,7 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
   $scope.btnSearchModal = function (){ $('#searchModal').modal('show'); }
   $scope.btnConfirmSearch = function (){ $('#searchModal').modal('hide'); }
 
-  $scope.btnEditModal = function (idx, action){ 
+  /*$scope.btnEditModal = function (idx, action){ 
     $scope.cardEdit = angular.copy($scope.cardCollection[idx]); 
     $scope.moduleSelected = '';
     $scope.actionSelected = action;
@@ -315,6 +315,81 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
       $scope.moduleSelected = {id: $scope.cardEdit.idAccModulo, descripcion: ''};
     }
     $('#editModal').modal('show'); 
+  }*/
+  $scope.btnEditModal = function (idx, action){ 
+    if($scope.resultType == 'all'){
+      ModuloService.getModulo($scope.cardCollection[idx].id)
+        .then(function(response){
+          if(response.status >= 200 && response.status < 300 ){
+            $scope.cardEdit = response.data;
+            $scope.moduleSelected = '';
+            $scope.actionSelected = action;
+            $scope.modulesCollection  = $filter('filter')(modulesArr, function(value){
+              return value.id != $scope.cardEdit.id;
+            });
+            if($scope.cardEdit.idAccModulo != null){
+              $scope.moduleSelected = {id: $scope.cardEdit.idAccModulo, descripcion: ''};
+            }
+            $('#editModal').modal('show'); 
+          }else{
+            swal({
+              title: "Atencion",
+              text: response.statusText,
+              icon: "warning",
+              buttons: true,
+              // dangerMode: true,
+            })
+          }
+        })
+        .catch(function (error) { 
+          if(error.status == 400){ $scope.$emit('error404'); }
+          else{
+              swal({
+                title: "ERROR",
+                text: error.data,
+                icon: "error",
+                // buttons: true,
+                dangerMode: true,
+              });
+          } 
+        });
+      }else{
+        ModuloService.getModuloSLC($scope.cardCollection[idx].id)
+          .then(function(response){
+            if(response.status >= 200 && response.status < 300 ){
+              $scope.cardEdit = response.data;
+              $scope.moduleSelected = '';
+              $scope.actionSelected = action;
+              $scope.modulesCollection  = $filter('filter')(modulesArr, function(value){
+                return value.id != $scope.cardEdit.idOrigen;
+              });
+              if($scope.cardEdit.idAccModulo != null){
+                $scope.moduleSelected = {id: $scope.cardEdit.idAccModulo, descripcion: ''};
+              }
+              $('#editModal').modal('show'); 
+            }else{
+              swal({
+                title: "Atencion",
+                text: response.statusText,
+                icon: "warning",
+                buttons: true,
+                // dangerMode: true,
+              })
+            }
+          })
+          .catch(function (error) { 
+            if(error.status == 400){ $scope.$emit('error404'); }
+            else{
+                swal({
+                  title: "ERROR",
+                  text: error.data,
+                  icon: "error",
+                  // buttons: true,
+                  dangerMode: true,
+                });
+            } 
+          });
+      }
   }
 
   $scope.btnConfirmEdit = function (action){ 

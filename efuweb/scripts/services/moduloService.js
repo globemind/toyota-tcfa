@@ -10,6 +10,10 @@ function ModuloService ($http, $location, $cookies) {
 		return  $http.get(apiUrl+'api/Modulos/listado', config);
 	};
 
+	response.getModulo = function (id) {
+		return  $http.get(apiUrl+'api/Modulos/'+id, config);
+	};
+
 	//TODOS
 	response.getModulosTodos = function (porigen, pprograma) {
 		return  $http.get(apiUrl+'api/Modulos?origen='+porigen+'&programa='+pprograma, config);
@@ -38,6 +42,10 @@ function ModuloService ($http, $location, $cookies) {
 
 	response.setModuloSLC = function (model) {
 		return  $http.post(apiUrl+'api/ModulosSLC/', model, config);
+	};
+
+	response.getModuloSLC = function (id) {
+		return  $http.get(apiUrl+'api/ModulosSLC/'+id, config);
 	};
 
 
