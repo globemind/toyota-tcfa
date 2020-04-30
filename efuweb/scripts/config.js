@@ -110,6 +110,46 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
         }]
       }
     })
+    
+    .state('app.configuration.programs', {
+      url: '/programs/:param',
+      controller: 'programsCtrl',
+      data: {
+        pageTitle: 'Programas'
+      },
+      templateUrl: 'views/programs/index.html',
+      resolve: {
+        service: ['$ocLazyLoad', function ($ocLazyLoad) {
+          return $ocLazyLoad.load({
+            serie: true,
+            files: [
+              'scripts/services/programService.js',
+              'scripts/controllers/programsCtrl.js',
+            ]
+          });
+        }]
+      }
+    })
+    
+    .state('app.configuration.users', {
+      url: '/users/:param',
+      controller: 'programsCtrl',
+      data: {
+        pageTitle: 'Usuarios'
+      },
+      templateUrl: 'views/users/index.html',
+      resolve: {
+        service: ['$ocLazyLoad', function ($ocLazyLoad) {
+          return $ocLazyLoad.load({
+            serie: true,
+            files: [
+              'scripts/services/programService.js',
+              'scripts/controllers/programsCtrl.js',
+            ]
+          });
+        }]
+      }
+    })
 
     /*.state('app.programs', {
       url: '/programs/:program/:param',

@@ -31,6 +31,10 @@ function MenuCtrl ($scope, $window, $cookies, $location, $rootScope, $state, Use
 			$state.go('app.configuration.profiles', { param: pparam });
 		}else if(pprogram == 'mdl001'){
 			$state.go('app.configuration.modules', { param: pparam });
+		}else if(pprogram == 'pgr001'){
+			$state.go('app.configuration.programs', { param: pparam });
+		}else if(pprogram == 'usr001'){
+			$state.go('app.configuration.users', { param: pparam });
 		}
 		
 	}
