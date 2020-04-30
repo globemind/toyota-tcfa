@@ -1,23 +1,67 @@
 function UserService ($http, $location, $cookies) {
 
-	var userResponse = {};
+	var response = {};
 
 	var config = {
 		headers:  {'Authorization': $cookies.getObject('token')}
 	};
 
-	userResponse.setLogin = function (model) {
+	response.setLogin = function (model) {
 		return  $http.post(apiUrl+'users/authenticate', model);
 	};
 
-	userResponse.getMenu = function () {
+	response.getMenu = function () {
 		return  $http.get(apiUrl+'api/PanelMenu/', config);
 	};
 
-	userResponse.setProgramasRecientes = function (id) {
+	response.setProgramasRecientes = function (id) {
 		var model = { "idAccPrograma": id }
 		return  $http.post(apiUrl+'api/ProgramasRecientes/', model, config);
 	};
 
-	return userResponse;
+	//ABM
+	response.getUsers = function () {
+		return  $http.get(apiUrl+'api/Usuarios/', config);
+	};
+
+	response.getUser = function (id) {
+		return  $http.get(apiUrl+'api/Usuarios/'+id, config);
+	};
+
+	//TODOS
+	response.getUsersTodos = function (porigen, pprograma, psearch) {
+		return  $http.get(apiUrl+'api/Usuarios?origen='+porigen+'&programa='+pprograma+'&codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
+	};
+
+	response.deleteUsers = function (model) {
+		return  $http.delete(apiUrl+'api/Usuarios/'+model.id, config);
+	};
+	
+	response.putUsers = function (model) {
+		return  $http.put(apiUrl+'api/Usuarios/'+model.id, model, config);
+	};
+
+	//SLC
+	response.getUsersSLC = function (porigen, pprograma, psearch) {
+		return  $http.get(apiUrl+'api/UsuariosSLC?origen='+porigen+'&programa='+pprograma+'&codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
+	};
+
+	response.deleteUserSLC = function (model, verb) {
+		return  $http.delete(apiUrl+'api/UsuariosSLC/'+verb+'/'+model.id, config);
+	};
+
+	response.putUserSLC = function (model) {
+		return  $http.put(apiUrl+'api/UsuariosSLC/'+model.id, model, config);
+	};
+
+	response.setUserSLC = function (model) {
+		return  $http.post(apiUrl+'api/UsuariosSLC/', model, config);
+	};
+
+	response.getUserSLC = function (id) {
+		return  $http.get(apiUrl+'api/UsuariosSLC/'+id, config);
+	};
+
+
+	return response;
 }

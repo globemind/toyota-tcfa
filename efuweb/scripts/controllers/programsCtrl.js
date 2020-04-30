@@ -17,12 +17,15 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
  	$scope.cardCollection = [];
   $scope.acctionsCollection = '';
   $scope.cardEdit = '';
-  $scope.searchModel = '';
+  $scope.searchModel = {
+    codigo: '',
+    descripcion: '',
+  };
 
 
   $scope.btnSearch = function(){
     if($scope.resultType == 'all'){
-      ProgramService.getProgramsTodos('T', 'pgr001')
+      ProgramService.getProgramsTodos('T', 'pgr001', $scope.searchModel)
         .then(function(response){
           if(response.status == 200){
             $scope.cardCollection = response.data.datos;
@@ -44,7 +47,7 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
     }else{
       var pcountType = "A";
       if($stateParams.param == 'pend'){ pcountType = "P"; }
-      ProgramService.getProgramsSLC( pcountType, 'pgr001')
+      ProgramService.getProgramsSLC( pcountType, 'pgr001', $scope.searchModel)
         .then(function(response){
           if(response.status == 200){
             $scope.cardCollection = response.data.datos;
@@ -296,9 +299,12 @@ function ProgramsCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
 
   $scope.btnSearchModal = function (){ $('#searchModal').modal('show'); }
   $scope.btnConfirmSearch = function (){ 
-    if($scope.searchModel != ''){
-      $('#searchModal').modal('hide');
-    }else{ $('#searchModal').modal('hide'); }
+    $scope.btnSearch()
+    $('#searchModal').modal('hide');
+    $scope.searchModel = {
+      codigo: '',
+      descripcion: '',
+    };
   }
 
   $/*scope.btnEditModal = function (idx, action){ 

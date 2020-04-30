@@ -17,11 +17,15 @@ function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, $state,
  	$scope.cardCollection = [];
   $scope.acctionsCollection = '';
   $scope.cardEdit = '';
+  $scope.searchModel = {
+    codigo: '',
+    descripcion: '',
+  };
 
 
   $scope.btnSearchGroups = function(){
     if($scope.resultType == 'all'){
-      GroupService.getGruposTodos('T', 'grp001')
+      GroupService.getGruposTodos('T', 'grp001', $scope.searchModel)
         .then(function(response){
           if(response.status == 200){
             $scope.cardCollection = response.data.datos;
@@ -43,7 +47,7 @@ function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, $state,
     }else{
       var pcountType = "A";
       if($stateParams.param == 'pend'){ pcountType = "P"; }
-      GroupService.getGruposSLC( pcountType, 'grp001')
+      GroupService.getGruposSLC( pcountType, 'grp001', $scope.searchModel)
         .then(function(response){
           if(response.status == 200){
             $scope.cardCollection = response.data.datos;
@@ -294,7 +298,16 @@ function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, $state,
   }
 
   $scope.btnSearchModal = function (){ $('#searchModal').modal('show'); }
-  $scope.btnConfirmSearch = function (){ $('#searchModal').modal('hide'); }
+
+  $scope.btnConfirmSearch = function (){ 
+    $scope.btnSearch()
+    $('#searchModal').modal('hide');
+    $scope.searchModel = {
+      codigo: '',
+      descripcion: '',
+    };
+  }
+
 
   $scope.btnEditModal = function (idx, action){ 
     $scope.cardEdit = angular.copy($scope.cardCollection[idx]);

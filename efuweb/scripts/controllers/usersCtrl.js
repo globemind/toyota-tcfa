@@ -1,6 +1,6 @@
-angular.module('mainapp').factory('ModuloService', ModuloService);
+angular.module('mainapp').factory('UserService', UserService);
 
-function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state, $filter, ModuloService) {
+function UsersCtrl ($scope, $window, $cookies, $location, $stateParams, $state, UserService) {
 	
   if(angular.isUndefined($cookies.getObject('name')) || 
     angular.isUndefined($cookies.getObject('uid')) || 
@@ -13,10 +13,8 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
   	title: ''
   }
   var selectedIdx = '';
-  var modulesArr = '';
   $scope.resultType = $stateParams.param;
  	$scope.cardCollection = [];
-  $scope.modulesCollection = [];
   $scope.acctionsCollection = '';
   $scope.cardEdit = '';
   $scope.searchModel = {
@@ -25,15 +23,9 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
   };
 
 
-  ModuloService.getModulos()
-    .then(function(response){
-      // if(response.status == 200){ $scope.modulesCollection = response.data; }
-      if(response.status == 200){ modulesArr = response.data; }
-    });
-
-  $scope.btnSearchGroups = function(){
+  $scope.btnSearch = function(){
     if($scope.resultType == 'all'){
-      ModuloService.getModulosTodos('T', 'mdl001', $scope.searchModel)
+      UserService.getUsersTodos('T', 'usr001', $scope.searchModel)
         .then(function(response){
           if(response.status == 200){
             $scope.cardCollection = response.data.datos;
@@ -55,7 +47,7 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
     }else{
       var pcountType = "A";
       if($stateParams.param == 'pend'){ pcountType = "P"; }
-      ModuloService.getModulosSLC( pcountType, 'mdl001', $scope.searchModel)
+      UserService.getUsersSLC( pcountType, 'usr001', $scope.searchModel)
         .then(function(response){
           if(response.status == 200){
             $scope.cardCollection = response.data.datos;
@@ -90,7 +82,7 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
     .then((willDelete) => {
       if (willDelete) { // DELETE
         if(action == 3){
-          ModuloService.deleteModulo($scope.cardCollection[idx])
+          UserService.deleteUsers($scope.cardCollection[idx])
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -115,7 +107,7 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
               } 
             });
         }else if(action == 5){
-          ModuloService.deleteModuloSLC($scope.cardCollection[idx], 'eliminar')
+          UserService.deleteUserSLC($scope.cardCollection[idx], 'eliminar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -140,7 +132,7 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
               } 
             });
         }else if(action == 6){
-          ModuloService.deleteModuloSLC($scope.cardCollection[idx], 'autorizar')
+          UserService.deleteUserSLC($scope.cardCollection[idx], 'autorizar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -165,7 +157,7 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
               } 
             });
         }else if(action == 7){
-          ModuloService.deleteModuloSLC($scope.cardCollection[idx], 'desautorizar')
+          UserService.deleteUserSLC($scope.cardCollection[idx], 'desautorizar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -207,7 +199,7 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
     .then((willDelete) => {
       if (willDelete) { // DELETE
         if(action == 6){
-          ModuloService.deleteModuloSLC($scope.cardCollection[idx], 'autorizar')
+          UserService.deleteUserSLC($scope.cardCollection[idx], 'autorizar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -232,7 +224,7 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
               } 
             });
         }else if(action == 7){
-          ModuloService.deleteModuloSLC($scope.cardCollection[idx], 'desautorizar')
+          UserService.deleteUserSLC($scope.cardCollection[idx], 'desautorizar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -274,7 +266,7 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
     .then((willDelete) => {
       if (willDelete) { // DELETE
         if(action == 7){
-          ModuloService.deleteModuloSLC($scope.cardCollection[idx], 'desautorizar')
+          UserService.deleteUserSLC($scope.cardCollection[idx], 'desautorizar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -316,33 +308,19 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
     };
   }
 
-
-  /*$scope.btnEditModal = function (idx, action){ 
-    $scope.cardEdit = angular.copy($scope.cardCollection[idx]); 
-    $scope.moduleSelected = '';
+  $/*scope.btnEditModal = function (idx, action){ 
+    $scope.cardEdit = angular.copy($scope.cardCollection[idx]);
     $scope.actionSelected = action;
-    $scope.modulesCollection  = $filter('filter')(modulesArr, function(value){
-      return value.id != $scope.cardEdit.id;
-    });
-    if($scope.cardEdit.idAccModulo != null){
-      $scope.moduleSelected = {id: $scope.cardEdit.idAccModulo, descripcion: ''};
-    }
     $('#editModal').modal('show'); 
   }*/
+
   $scope.btnEditModal = function (idx, action){ 
     if($scope.resultType == 'all'){
-      ModuloService.getModulo($scope.cardCollection[idx].id)
+      UserService.getUser($scope.cardCollection[idx].id)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
             $scope.cardEdit = response.data;
-            $scope.moduleSelected = '';
             $scope.actionSelected = action;
-            $scope.modulesCollection  = $filter('filter')(modulesArr, function(value){
-              return value.id != $scope.cardEdit.id;
-            });
-            if($scope.cardEdit.idAccModulo != null){
-              $scope.moduleSelected = {id: $scope.cardEdit.idAccModulo, descripcion: ''};
-            }
             $('#editModal').modal('show'); 
           }else{
             swal({
@@ -367,18 +345,18 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
           } 
         });
       }else{
-        ModuloService.getModuloSLC($scope.cardCollection[idx].id)
+        ModuloService.getUserSLC($scope.cardCollection[idx].id)
           .then(function(response){
             if(response.status >= 200 && response.status < 300 ){
               $scope.cardEdit = response.data;
-              $scope.moduleSelected = '';
+              // $scope.moduleSelected = '';
               $scope.actionSelected = action;
-              $scope.modulesCollection  = $filter('filter')(modulesArr, function(value){
+              /*$scope.modulesCollection  = $filter('filter')(modulesArr, function(value){
                 return value.id != $scope.cardEdit.idOrigen;
               });
               if($scope.cardEdit.idAccModulo != null){
                 $scope.moduleSelected = {id: $scope.cardEdit.idAccModulo, descripcion: ''};
-              }
+              }*/
               $('#editModal').modal('show'); 
             }else{
               swal({
@@ -406,10 +384,8 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
   }
 
   $scope.btnConfirmEdit = function (action){ 
-    // $scope.cardEdit.idAccModuloNavigation = $scope.moduleSelected;
-    $scope.cardEdit.idAccModulo = $scope.moduleSelected.id;
     if(action == 2){
-      ModuloService.putModulo($scope.cardEdit)
+      UserService.putUsers($scope.cardEdit)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
             $window.location.reload();
@@ -437,7 +413,7 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
           } 
         });
     }else if(action == 4){
-      ModuloService.putModuloSLC($scope.cardEdit)
+      UserService.putUserSLC($scope.cardEdit)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
             $window.location.reload();
@@ -467,26 +443,17 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
     }
   }
 
-
-  $scope.btnFilterActions = function (pparam){
-    $state.go('app.configuration.modules', {
-        param: pparam
-    });
-  }
-
   $scope.btnAddCardModal = function (){ 
     $scope.newModel = {
       descripcion: '',
       codigo: '',
-      idAccModuloNavigation: '',
     }
-    $scope.modulesCollection  = modulesArr;
     $('#newModal').modal('show'); 
   } 
 
   $scope.btnConfirmNew = function (){ 
     if(validateNewForm()){
-      ModuloService.setModuloSLC($scope.newModel)
+      UserService.setUserSLC($scope.newModel)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
             $window.location.reload();
@@ -521,7 +488,13 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
     }
   } 
 
-  $scope.btnSearchGroups();
+  $scope.btnFilterActions = function (pparam){
+    $state.go('app.configuration.users', {
+        param: pparam
+    });
+  }
+
+  $scope.btnSearch();
 
   function setActions (collection){
     var actionArr = {
@@ -561,5 +534,5 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
 
 }
 
-angular.module('mainapp').controller('modulesCtrl', ModulesCtrl);
+angular.module('mainapp').controller('usersCtrl', UsersCtrl);
 

@@ -133,7 +133,7 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
     
     .state('app.configuration.users', {
       url: '/users/:param',
-      controller: 'programsCtrl',
+      controller: 'usersCtrl',
       data: {
         pageTitle: 'Usuarios'
       },
@@ -144,7 +144,7 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
             serie: true,
             files: [
               'scripts/services/programService.js',
-              'scripts/controllers/programsCtrl.js',
+              'scripts/controllers/usersCtrl.js',
             ]
           });
         }]

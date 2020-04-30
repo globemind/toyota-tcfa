@@ -14,20 +14,13 @@
 			<!-- </div> -->
 
 			<div class="col text-right">
-				<div class="btn-group col-6" style="margin-left: auto;">
+				<div class="btn-group col-4" style="margin-left: auto;">
 					<div class="btn-group col" >
 					  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'all'}" ng-click="btnFilterActions('all')">Todos</button>
 					  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'pend'}" ng-click="btnFilterActions('pend')">Pendientes</button>
 					  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'auth'}" ng-click="btnFilterActions('auth')">A Autorizar</button>
+					  <button class="btn btn-sm btn-white" style="margin-left: 10px" ng-click="btnSearchModal()"><i class="fa fa-search"></i></button>
 					</div>
-					<div class="input-group col-6">
-						<input type="text" class="form-control" placeholder="Ingrese texto a buscar">
-						<div class="input-group-append">									
-							<!-- <button type="button" class="btn btn-yellow no-caret">Action</button> -->
-							<button class="btn btn-sm btn-white no-caret"  ng-click="btnSearchModal()"><i class="fa fa-search"></i></button>
-						</div>
-					</div>
-				<!-- <button class="btn btn-sm btn-white" style="margin-left: 10px" ng-click="btnSearchModal()"><i class="fa fa-search"></i></button> -->
 				</div>
 				<!-- dropdown -->
 				<!-- <div class="btn-group" style="margin-left: 10px">
@@ -60,8 +53,8 @@
 		<div class="col-xs-3" style="margin-bottom: 20px" ng-repeat="card in cardCollection">
 			<div class="card border-8" style="border-top: 4px solid red;">
 				<div class="card-body">
-					<h4 class="card-title m-t-0">{{card.descripcion}} </h4>
-					<h6 class="card-subtitle m-b-10 text-muted"><span class="label label-theme">{{card.codigo}}</span></h6>
+					<h4 class="card-title m-t-0">{{card.nombres}} {{card.apellido}} </h4>
+					<h6 class="card-subtitle m-b-10 text-muted"><span class="label label-theme">{{card.adCuenta}}</span></h6>
 					<p class="card-text">
 						<div> <strong>Creado por:</strong> {{card.creadoPor}}</div>
 						<div> <strong>Creado en:</strong> {{card.creadoEn}}</div>
@@ -96,14 +89,30 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Buscar Programas</h4>
+					<h4 class="modal-title">Buscar Usuarios</h4>
 					<a href="" class="btn btn-danger btn-icon btn-circle btn-xs" data-dismiss="modal"><i class="fa fa-times"></i></a>
-					<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#fff;">×</button> -->
 				</div>
 				<div class="modal-body">
-					<p>
-						Modal body content here...
-					</p>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+		                        <label for="selectVende">Nombre del Usuario</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Usuario" ng-model="searchModel.nombres"/>
+		                      </div>
+						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+		                        <label for="selectVende">Apellido del Usuario</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Apellido del Usuario" ng-model="searchModel.apellido"/>
+		                      </div>
+						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+		                        <label for="selectVende">Cuenta del Usuario</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Cuenta del Usuario" ng-model="searchModel.adCuenta"/>
+		                      </div>
+						</div>
+					</div>
 				</div>
 				<div class="modal-footer" style="padding: 7px;">
 					<a href="javascript:;" class="btn btn-white btn-sm" data-dismiss="modal">Cancelar</a>
@@ -119,7 +128,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Editar Usurio</h4>
+					<h4 class="modal-title">Editar Usuario</h4>
 					<a href="" class="btn btn-danger btn-icon btn-circle btn-xs" data-dismiss="modal"><i class="fa fa-times"></i></a>
 					<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#fff;">×</button> -->
 				</div>
@@ -127,14 +136,20 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="form-group">
-		                        <label for="selectVende">Nombre del Usurio</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Usurio" ng-model="cardEdit.descripcion" ng-disabled="actionSelected != 2"/>
+		                        <label for="selectVende">Nombre del Usuario</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Usuario" ng-model="cardEdit.nombres" ng-disabled="actionSelected != 2"/>
 		                      </div>
 						</div>
 						<div class="col-xs-12">
 							<div class="form-group">
-		                        <label for="selectVende">Alias del Usurio</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Alias del Usurio" ng-model="cardEdit.codigo" ng-disabled="actionSelected != 2"/>
+		                        <label for="selectVende">Apellido del Usuario</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Apellido del Usuario" ng-model="cardEdit.apellido" ng-disabled="actionSelected != 2"/>
+		                      </div>
+						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+		                        <label for="selectVende">Cuenta del Usuario</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Cuenta del Usuario" ng-model="cardEdit.adCuenta" ng-disabled="actionSelected != 2"/>
 		                      </div>
 						</div>
 					</div>
@@ -154,7 +169,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Nuevo Usurio</h4>
+					<h4 class="modal-title">Nuevo Usuario</h4>
 					<a href="" class="btn btn-danger btn-icon btn-circle btn-xs" data-dismiss="modal"><i class="fa fa-times"></i></a>
 					<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#fff;">×</button> -->
 				</div>
@@ -162,14 +177,20 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="form-group">
-		                        <label for="selectVende">Nombre del Usurio</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Usurio" ng-model="newModel.descripcion"/>
+		                        <label for="selectVende">Nombre del Usuario</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Usuario" ng-model="newModel.nombres"/>
 		                      </div>
 						</div>
 						<div class="col-xs-12">
 							<div class="form-group">
-		                        <label for="selectVende">Alias del Usurio</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Alias del Usurio" ng-model="newModel.codigo"/>
+		                        <label for="selectVende">Apellido del Usuario</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Apellido del Usuario" ng-model="newModel.apellido"/>
+		                      </div>
+						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+		                        <label for="selectVende">Cuenta del Usuario</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Cuenta del Usuario" ng-model="newModel.adCuenta"/>
 		                      </div>
 						</div>
 					</div>

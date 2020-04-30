@@ -15,8 +15,8 @@ function ProgramService ($http, $location, $cookies) {
 	};
 
 	//TODOS
-	response.getProgramsTodos = function (porigen, pprograma) {
-		return  $http.get(apiUrl+'api/Programas?origen='+porigen+'&programa='+pprograma, config);
+	response.getProgramsTodos = function (porigen, pprograma, psearch) {
+		return  $http.get(apiUrl+'api/Programas?origen='+porigen+'&programa='+pprograma+'&codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
 	};
 
 	response.deletePrograms = function (model) {
@@ -28,8 +28,8 @@ function ProgramService ($http, $location, $cookies) {
 	};
 
 	//SLC
-	response.getProgramsSLC = function (porigen, pprograma) {
-		return  $http.get(apiUrl+'api/ProgramasSLC?origen='+porigen+'&programa='+pprograma, config);
+	response.getProgramsSLC = function (porigen, pprograma, psearch) {
+		return  $http.get(apiUrl+'api/ProgramasSLC?origen='+porigen+'&programa='+pprograma+'&codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
 	};
 
 	response.deleteProgramSLC = function (model, verb) {

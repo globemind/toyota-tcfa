@@ -14,12 +14,14 @@
 			<!-- </div> -->
 
 			<div class="col text-right">
-				<div class="btn-group" style="margin-left: auto;">
-				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'all'}" ng-click="btnFilterActions('all')">Todos</button>
-				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'pend'}" ng-click="btnFilterActions('pend')">Pendientes</button>
-				  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'auth'}" ng-click="btnFilterActions('auth')">A Autorizar</button>
+				<div class="btn-group col-4" style="margin-left: auto;">
+					<div class="btn-group col" >
+					  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'all'}" ng-click="btnFilterActions('all')">Todos</button>
+					  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'pend'}" ng-click="btnFilterActions('pend')">Pendientes</button>
+					  <button class="btn btn-sm btn-white " ng-class="{active: resultType == 'auth'}" ng-click="btnFilterActions('auth')">A Autorizar</button>
+					  <button class="btn btn-sm btn-white" style="margin-left: 10px" ng-click="btnSearchModal()"><i class="fa fa-search"></i></button>
+					</div>
 				</div>
-				<button class="btn btn-sm btn-white" style="margin-left: 10px" ng-click="btnSearchModal()"><i class="fa fa-search"></i></button>
 				<!-- dropdown -->
 				<!-- <div class="btn-group" style="margin-left: 10px">
 					<a href="javascript:;" class="btn btn-sm btn-white">Ordenar</a>
@@ -162,21 +164,13 @@
 						<div class="col-xs-12">
 							<div class="form-group">
 		                        <label for="selectVende">Nombre del Modulo</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Modulo" ng-model="newModel.descripcion"/>
+								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Modulo" ng-model="searchModel.descripcion"/>
 		                      </div>
 						</div>
 						<div class="col-xs-12">
 							<div class="form-group">
 		                        <label for="selectVende">Alias del Modulo</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Alias del Modulo" ng-model="newModel.codigo"/>
-		                      </div>
-						</div>
-						<div class="col-xs-12">
-							<div class="form-group">
-		                        <label for="selectVende">Modulo Padre</label>
-								<select class="form-control input-sm" ng-model="newModel.idAccModuloNavigation" ng-options="module.descripcion for module in modulesCollection track by module.id">
-									
-		                        </select> 
+								<input type="text" class="form-control form-control-sm" placeholder="Alias del Modulo" ng-model="searchModel.codigo"/>
 		                      </div>
 						</div>
 					</div>

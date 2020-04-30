@@ -17,11 +17,15 @@ function ProfilesCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
  	$scope.cardCollection = [];
   $scope.acctionsCollection = '';
   $scope.cardEdit = '';
+  $scope.searchModel = {
+    codigo: '',
+    descripcion: '',
+  };
 
 
   $scope.btnSearch = function(){
     if($scope.resultType == 'all'){
-      ProfileService.getPerfilesTodos('T', 'prf001')
+      ProfileService.getPerfilesTodos('T', 'prf001', $scope.searchModel)
         .then(function(response){
           if(response.status == 200){
             $scope.cardCollection = response.data.datos;
@@ -43,7 +47,7 @@ function ProfilesCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
     }else{
       var pcountType = "A";
       if($stateParams.param == 'pend'){ pcountType = "P"; }
-      ProfileService.getPerfilesSLC( pcountType, 'prf001')
+      ProfileService.getPerfilesSLC( pcountType, 'prf001', $scope.searchModel)
         .then(function(response){
           if(response.status == 200){
             $scope.cardCollection = response.data.datos;
@@ -294,7 +298,16 @@ function ProfilesCtrl ($scope, $window, $cookies, $location, $stateParams, $stat
   }
 
   $scope.btnSearchModal = function (){ $('#searchModal').modal('show'); }
-  $scope.btnConfirmSearch = function (){ $('#searchModal').modal('hide'); }
+
+  $scope.btnConfirmSearch = function (){ 
+    $scope.btnSearch()
+    $('#searchModal').modal('hide');
+    $scope.searchModel = {
+      codigo: '',
+      descripcion: '',
+    };
+  }
+
 
   $scope.btnEditModal = function (idx, action){ 
     $scope.cardEdit = angular.copy($scope.cardCollection[idx]);

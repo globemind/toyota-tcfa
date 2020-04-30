@@ -11,8 +11,8 @@ function ProfileService ($http, $location, $cookies) {
 	};
 
 	//TODOS
-	response.getPerfilesTodos = function (porigen, pprograma) {
-		return  $http.get(apiUrl+'api/Perfiles?origen='+porigen+'&programa='+pprograma, config);
+	response.getPerfilesTodos = function (porigen, pprograma, psearch) {
+		return  $http.get(apiUrl+'api/Perfiles?origen='+porigen+'&programa='+pprograma+'&codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
 	};
 
 	response.deletePerfile = function (model) {
@@ -24,8 +24,8 @@ function ProfileService ($http, $location, $cookies) {
 	};
 
 	//SLC
-	response.getPerfilesSLC = function (porigen, pprograma) {
-		return  $http.get(apiUrl+'api/PerfilesSLC?origen='+porigen+'&programa='+pprograma, config);
+	response.getPerfilesSLC = function (porigen, pprograma, psearch) {
+		return  $http.get(apiUrl+'api/PerfilesSLC?origen='+porigen+'&programa='+pprograma+'&codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
 	};
 
 	response.deletePerfileSLC = function (model, verb) {
