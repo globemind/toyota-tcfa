@@ -1,6 +1,7 @@
 angular.module('mainapp').factory('UserService', UserService);
+angular.module('mainapp').factory('ProfileService', ProfileService);
 
-function UsersCtrl ($scope, $window, $cookies, $location, $stateParams, $state, UserService) {
+function UsersCtrl ($scope, $window, $cookies, $location, $stateParams, $state, UserService, ProfileService) {
 	
   if(angular.isUndefined($cookies.getObject('name')) || 
     angular.isUndefined($cookies.getObject('uid')) || 
@@ -13,15 +14,28 @@ function UsersCtrl ($scope, $window, $cookies, $location, $stateParams, $state, 
   	title: ''
   }
   var selectedIdx = '';
+  $scope.profilesCollection  = '';
+  $scope.adusersCollection  = '';
   $scope.resultType = $stateParams.param;
  	$scope.cardCollection = [];
   $scope.acctionsCollection = '';
   $scope.cardEdit = '';
   $scope.searchModel = {
-    codigo: '',
-    descripcion: '',
+    nombres: '',
+    apellido: '',
+    adCuenta: '',
+    idAccPerfil: '',
   };
 
+  ProfileService.getPerfiles()
+    .then(function(response){
+      if(response.status == 200){ $scope.profilesCollection = response.data; }
+    });
+
+  UserService.getADUser()
+    .then(function(response){
+      if(response.status == 200){ $scope.adusersCollection = response.data; }
+    });
 
   $scope.btnSearch = function(){
     if($scope.resultType == 'all'){
@@ -297,18 +311,29 @@ function UsersCtrl ($scope, $window, $cookies, $location, $stateParams, $state, 
     });
   }
 
-  $scope.btnSearchModal = function (){ $('#searchModal').modal('show'); }
-
-  $scope.btnConfirmSearch = function (){ 
-    $scope.btnSearch()
-    $('#searchModal').modal('hide');
+  $scope.btnSearchModal = function (){ 
     $scope.searchModel = {
-      codigo: '',
-      descripcion: '',
+      nombres: '',
+      apellido: '',
+      adCuenta: '',
+      idAccPerfil: '',
+      bloqueado: '0',
+      maxCantidadConexiones: 1,
+      sucursal: '',
+      profileSelected: '',
     };
+    $('#searchModal').modal('show'); 
   }
 
-  $/*scope.btnEditModal = function (idx, action){ 
+  $scope.btnConfirmSearch = function (){ 
+    if(!angular.isUndefined($scope.searchModel.profileSelected.id)){
+      $scope.searchModel.idAccPerfil = $scope.searchModel.profileSelected.id;
+    }
+    $scope.btnSearch()
+    $('#searchModal').modal('hide');
+  }
+
+  /*$scope.btnEditModal = function (idx, action){ 
     $scope.cardEdit = angular.copy($scope.cardCollection[idx]);
     $scope.actionSelected = action;
     $('#editModal').modal('show'); 
@@ -320,6 +345,9 @@ function UsersCtrl ($scope, $window, $cookies, $location, $stateParams, $state, 
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
             $scope.cardEdit = response.data;
+            $scope.cardEdit.profileSelected = {id: $scope.cardEdit.idAccPerfil};
+            $scope.cardEdit.bloqueado = $scope.cardEdit.bloqueado.toString();
+            $scope.cardEdit.maxCantidadConexiones = parseInt($scope.cardEdit.maxCantidadConexiones);
             $scope.actionSelected = action;
             $('#editModal').modal('show'); 
           }else{
@@ -345,18 +373,14 @@ function UsersCtrl ($scope, $window, $cookies, $location, $stateParams, $state, 
           } 
         });
       }else{
-        ModuloService.getUserSLC($scope.cardCollection[idx].id)
+        UserService.getUserSLC($scope.cardCollection[idx].id)
           .then(function(response){
             if(response.status >= 200 && response.status < 300 ){
               $scope.cardEdit = response.data;
-              // $scope.moduleSelected = '';
+              $scope.cardEdit.profileSelected = {id: $scope.cardEdit.idAccPerfil};
+              $scope.cardEdit.bloqueado = $scope.cardEdit.bloqueado.toString();
+              $scope.cardEdit.maxCantidadConexiones = parseInt($scope.cardEdit.maxCantidadConexiones);
               $scope.actionSelected = action;
-              /*$scope.modulesCollection  = $filter('filter')(modulesArr, function(value){
-                return value.id != $scope.cardEdit.idOrigen;
-              });
-              if($scope.cardEdit.idAccModulo != null){
-                $scope.moduleSelected = {id: $scope.cardEdit.idAccModulo, descripcion: ''};
-              }*/
               $('#editModal').modal('show'); 
             }else{
               swal({
@@ -384,6 +408,7 @@ function UsersCtrl ($scope, $window, $cookies, $location, $stateParams, $state, 
   }
 
   $scope.btnConfirmEdit = function (action){ 
+    $scope.cardEdit.idAccPerfil = $scope.cardEdit.profileSelected.id;
     if(action == 2){
       UserService.putUsers($scope.cardEdit)
         .then(function(response){
@@ -445,14 +470,22 @@ function UsersCtrl ($scope, $window, $cookies, $location, $stateParams, $state, 
 
   $scope.btnAddCardModal = function (){ 
     $scope.newModel = {
-      descripcion: '',
-      codigo: '',
+      aduserSelected: '',
+      profileSelected: '',
+      max_cantidad_conexiones: 1,
+      bloqueado: '0',
+      sucursal: '',
     }
     $('#newModal').modal('show'); 
   } 
 
   $scope.btnConfirmNew = function (){ 
     if(validateNewForm()){
+      $scope.newModel.ad_cuenta = $scope.newModel.aduserSelected.adCuenta;
+      $scope.newModel.security_identifier = $scope.newModel.aduserSelected.securityIdentifier;
+      $scope.newModel.apellido = $scope.newModel.aduserSelected.apellido;
+      $scope.newModel.nombres = $scope.newModel.aduserSelected.nombres;
+      $scope.newModel.id_acc_perfil = $scope.newModel.profileSelected.id;
       UserService.setUserSLC($scope.newModel)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
@@ -526,8 +559,11 @@ function UsersCtrl ($scope, $window, $cookies, $location, $stateParams, $state, 
   function validateNewForm (){
     var rta = true;
 
-    if($scope.newModel.codigo == '' || angular.isUndefined($scope.newModel.codigo) || $scope.newModel.codigo == null) { rta = false;}
-    if($scope.newModel.descripcion == '' || angular.isUndefined($scope.newModel.descripcion) || $scope.newModel.descripcion == null) { rta = false;}
+    if($scope.newModel.aduserSelected.adCuenta == '' || angular.isUndefined($scope.newModel.aduserSelected.adCuenta) || $scope.newModel.aduserSelected.adCuenta == null) { rta = false;}
+    if($scope.newModel.profileSelected.id == '' || angular.isUndefined($scope.newModel.profileSelected.id) || $scope.newModel.profileSelected.id == null) { rta = false;}
+    if($scope.newModel.max_cantidad_conexiones == '' || angular.isUndefined($scope.newModel.max_cantidad_conexiones) || $scope.newModel.max_cantidad_conexiones == null) { rta = false;}
+    if($scope.newModel.sucursal == '' || angular.isUndefined($scope.newModel.sucursal) || $scope.newModel.sucursal == null) { rta = false;}
+    if($scope.newModel.bloqueado == '' || angular.isUndefined($scope.newModel.bloqueado) || $scope.newModel.bloqueado == null) { rta = false;}
 
     return rta;
   }

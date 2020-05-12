@@ -16,11 +16,12 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
   var modulesArr = '';
   $scope.resultType = $stateParams.param;
  	$scope.cardCollection = [];
+  $scope.loading = false;
   $scope.modulesCollection = [];
   $scope.acctionsCollection = '';
   $scope.cardEdit = '';
   $scope.searchModel = {
-    codigo: '',
+    codigo: '00',
     descripcion: '',
   };
 
@@ -305,13 +306,18 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
     });
   }
 
-  $scope.btnSearchModal = function (){ $('#searchModal').modal('show'); }
+  $scope.btnSearchModal = function (){ 
+    $scope.loading = false;
+    $('#searchModal').modal('show'); 
+  }
 
   $scope.btnConfirmSearch = function (){ 
-    $scope.btnSearch()
+    $scope.loading = true;
+    $scope.btnSearchGroups();
     $('#searchModal').modal('hide');
+    $scope.loading = false;
     $scope.searchModel = {
-      codigo: '',
+      codigo: '00',
       descripcion: '',
     };
   }
@@ -481,16 +487,19 @@ function ModulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state
       idAccModuloNavigation: '',
     }
     $scope.modulesCollection  = modulesArr;
+    $scope.loading = false;
     $('#newModal').modal('show'); 
   } 
 
   $scope.btnConfirmNew = function (){ 
     if(validateNewForm()){
+      $scope.loading = true;
       ModuloService.setModuloSLC($scope.newModel)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
             $window.location.reload();
             $('#newModal').modal('hide');
+            $scope.loading = false;
           }else{
             swal({
               title: "Atencion",

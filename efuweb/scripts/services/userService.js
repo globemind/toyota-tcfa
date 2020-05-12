@@ -28,9 +28,13 @@ function UserService ($http, $location, $cookies) {
 		return  $http.get(apiUrl+'api/Usuarios/'+id, config);
 	};
 
+	response.getADUser = function () {
+		return  $http.get(apiUrl+'api/ADUsuarios/', config);
+	};
+
 	//TODOS
 	response.getUsersTodos = function (porigen, pprograma, psearch) {
-		return  $http.get(apiUrl+'api/Usuarios?origen='+porigen+'&programa='+pprograma+'&codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
+		return  $http.get(apiUrl+'api/Usuarios/Origen/'+porigen+'/Programa/'+pprograma+'?nombres='+psearch.nombres+'&apellido='+psearch.apellido+'&adCuenta='+psearch.adCuenta+'&idAccPerfil='+psearch.idAccPerfil, config);
 	};
 
 	response.deleteUsers = function (model) {
@@ -43,7 +47,7 @@ function UserService ($http, $location, $cookies) {
 
 	//SLC
 	response.getUsersSLC = function (porigen, pprograma, psearch) {
-		return  $http.get(apiUrl+'api/UsuariosSLC?origen='+porigen+'&programa='+pprograma+'&codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
+		return  $http.get(apiUrl+'api/UsuariosSLC/Origen/'+porigen+'/Programa/'+pprograma+'?nombres='+psearch.nombres+'&apellido='+psearch.apellido+'&adCuenta='+psearch.adCuenta+'&idAccPerfil='+psearch.idAccPerfil, config);
 	};
 
 	response.deleteUserSLC = function (model, verb) {

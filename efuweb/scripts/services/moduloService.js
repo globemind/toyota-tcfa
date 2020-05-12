@@ -7,7 +7,7 @@ function ModuloService ($http, $location, $cookies) {
 	};
 
 	response.getModulos = function () {
-		return  $http.get(apiUrl+'api/Modulos/listado', config);
+		return  $http.get(apiUrl+'api/Modulos/', config);
 	};
 
 	response.getModulo = function (id) {
@@ -16,7 +16,8 @@ function ModuloService ($http, $location, $cookies) {
 
 	//TODOS
 	response.getModulosTodos = function (porigen, pprograma, psearch) {
-		return  $http.get(apiUrl+'api/Modulos?origen='+porigen+'&programa='+pprograma+'&codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
+		// return  $http.get(apiUrl+'api/Modulos?origen='+porigen+'&programa='+pprograma+'&codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
+		return  $http.get(apiUrl+'api/Modulos/Origen/'+porigen+'/Programa/'+pprograma+'?codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
 	};
 
 	response.deleteModulo = function (model) {
@@ -29,7 +30,7 @@ function ModuloService ($http, $location, $cookies) {
 
 	//SLC
 	response.getModulosSLC = function (porigen, pprograma, psearch) {
-		return  $http.get(apiUrl+'api/ModulosSLC?origen='+porigen+'&programa='+pprograma+'&codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
+		return  $http.get(apiUrl+'api/ModulosSLC/Origen/'+porigen+'/Programa/'+pprograma+'?codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
 	};
 
 	response.deleteModuloSLC = function (model, verb) {

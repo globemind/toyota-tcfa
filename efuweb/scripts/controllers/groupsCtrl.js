@@ -16,6 +16,7 @@ function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, $state,
   $scope.resultType = $stateParams.param;
  	$scope.cardCollection = [];
   $scope.acctionsCollection = '';
+  $scope.loading = false;
   $scope.cardEdit = '';
   $scope.searchModel = {
     codigo: '',
@@ -300,7 +301,7 @@ function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, $state,
   $scope.btnSearchModal = function (){ $('#searchModal').modal('show'); }
 
   $scope.btnConfirmSearch = function (){ 
-    $scope.btnSearch()
+    $scope.btnSearchGroups()
     $('#searchModal').modal('hide');
     $scope.searchModel = {
       codigo: '',
@@ -387,14 +388,18 @@ function GroupsCtrl ($scope, $window, $cookies, $location, $stateParams, $state,
       descripcion: '',
       codigo: '',
     }
+    $scope.loading = false;
     $('#newModal').modal('show'); 
+
   } 
 
   $scope.btnConfirmNew = function (){ 
     if(validateNewForm()){
+      $scope.loading = true;
       GroupService.setGrupoSLC($scope.newModel)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
+            $scope.loading = false;
             $window.location.reload();
             $('#newModal').modal('hide');
           }else{

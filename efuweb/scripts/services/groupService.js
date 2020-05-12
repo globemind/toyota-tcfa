@@ -12,7 +12,7 @@ function GroupService ($http, $location, $cookies) {
 
 	//TODOS
 	groupsResponse.getGruposTodos = function (porigen, pprograma, psearch) {
-		return  $http.get(apiUrl+'api/Grupos?origen='+porigen+'&programa='+pprograma+'&codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
+		return  $http.get(apiUrl+'api/Grupos/Origen/'+porigen+'/Programa/'+pprograma+'?codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
 	};
 
 	groupsResponse.deleteGrupo = function (model) {
@@ -25,7 +25,7 @@ function GroupService ($http, $location, $cookies) {
 
 	//SLC
 	groupsResponse.getGruposSLC = function (porigen, pprograma, psearch) {
-		return  $http.get(apiUrl+'api/GruposSLC?origen='+porigen+'&programa='+pprograma+'&codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
+		return  $http.get(apiUrl+'api/GruposSLC/Origen/'+porigen+'/Programa/'+pprograma+'?codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
 	};
 
 	groupsResponse.deleteGrupoSLC = function (model, verb) {

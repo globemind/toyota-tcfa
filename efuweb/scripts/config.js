@@ -143,7 +143,8 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
           return $ocLazyLoad.load({
             serie: true,
             files: [
-              'scripts/services/programService.js',
+              'scripts/services/profileService.js',
+              'scripts/services/userService.js',
               'scripts/controllers/usersCtrl.js',
             ]
           });

@@ -112,6 +112,12 @@
 								<input type="text" class="form-control form-control-sm" placeholder="Cuenta del Usuario" ng-model="searchModel.adCuenta"/>
 		                      </div>
 						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+		                        <label for="selectVende">Perfil del Usuario</label>
+								<select class="form-control form-control-sm" ng-model="searchModel.profileSelected" ng-options="profile.descripcion for profile in profilesCollection track by profile.id"></select >
+		                    </div>
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer" style="padding: 7px;">
@@ -125,7 +131,7 @@
 
 	<!-- Modal EDIT INFORMATION-->
 	<div class="modal fade" id="editModal">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">Editar Usuario</h4>
@@ -134,23 +140,50 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						<div class="col-xs-12">
+						<div class="col-xs-4">
 							<div class="form-group">
 		                        <label for="selectVende">Nombre del Usuario</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Usuario" ng-model="cardEdit.nombres" ng-disabled="actionSelected != 2"/>
-		                      </div>
+								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Usuario" ng-model="cardEdit.nombres" ng-disabled="true"/>
+		                    </div>
 						</div>
-						<div class="col-xs-12">
+						<div class="col-xs-4">
 							<div class="form-group">
 		                        <label for="selectVende">Apellido del Usuario</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Apellido del Usuario" ng-model="cardEdit.apellido" ng-disabled="actionSelected != 2"/>
-		                      </div>
+								<input type="text" class="form-control form-control-sm" placeholder="Apellido del Usuario" ng-model="cardEdit.apellido" ng-disabled="true"/>
+		                    </div>
 						</div>
-						<div class="col-xs-12">
+						<div class="col-xs-4">
 							<div class="form-group">
 		                        <label for="selectVende">Cuenta del Usuario</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Cuenta del Usuario" ng-model="cardEdit.adCuenta" ng-disabled="actionSelected != 2"/>
-		                      </div>
+								<input type="text" class="form-control form-control-sm" placeholder="Cuenta del Usuario" ng-model="cardEdit.adCuenta" ng-disabled="true"/>
+		                    </div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+		                        <label for="selectVende">Perfil del Usuario</label>
+								<select class="form-control form-control-sm" ng-model="cardEdit.profileSelected" ng-options="profile.descripcion for profile in profilesCollection track by profile.id" ng-disabled="actionSelected != 2"></select >
+		                    </div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+		                        <label for="selectVende">Cantidad Maxima de Conexiones</label>
+								<input type="number" min="1" class="form-control form-control-sm" placeholder="Cantidad Maxima de Conexiones" ng-model="cardEdit.maxCantidadConexiones" ng-disabled="actionSelected != 2"/>
+		                    </div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+		                        <label for="selectVende">Sucursal</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Sucursal" ng-model="cardEdit.sucursal" ng-disabled="actionSelected != 2"/>
+		                    </div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+		                        <label for="selectVende">Bloqueado</label>
+								<select class="form-control input-sm" ng-model="cardEdit.bloqueado" ng-disabled="actionSelected != 2">
+		                          <option value="0">No</option>
+		                          <option value="1">Si</option>
+		                        </select> 
+		                    </div>
 						</div>
 					</div>
 				</div>
@@ -166,31 +199,58 @@
 
 	<!-- Modal NEW-->
 	<div class="modal fade" id="newModal">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">Nuevo Usuario</h4>
 					<a href="" class="btn btn-danger btn-icon btn-circle btn-xs" data-dismiss="modal"><i class="fa fa-times"></i></a>
-					<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#fff;">×</button> -->
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						<div class="col-xs-12">
-							<div class="form-group">
-		                        <label for="selectVende">Nombre del Usuario</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Usuario" ng-model="newModel.nombres"/>
-		                      </div>
-						</div>
-						<div class="col-xs-12">
-							<div class="form-group">
-		                        <label for="selectVende">Apellido del Usuario</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Apellido del Usuario" ng-model="newModel.apellido"/>
-		                      </div>
-						</div>
-						<div class="col-xs-12">
+						<div class="col-xs-4">
 							<div class="form-group">
 		                        <label for="selectVende">Cuenta del Usuario</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Cuenta del Usuario" ng-model="newModel.adCuenta"/>
+								<select class="form-control form-control-sm" ng-model="newModel.aduserSelected" ng-options="aduser.adCuenta for aduser in adusersCollection track by aduser.securityIdentifier"></select >
+		                      </div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+		                        <label for="selectVende">Apellido del Usuario</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Apellido del Usuario" ng-model="newModel.aduserSelected.apellido" ng-disabled="true"/>
+		                      </div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+		                        <label for="selectVende">Nombre del Usuario</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Cuenta del Usuario" ng-model="newModel.aduserSelected.nombres" ng-disabled="true"/>
+		                      </div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+		                        <label for="selectVende">Perfil del Usuario</label>
+								<select class="form-control form-control-sm" ng-model="newModel.profileSelected" ng-options="profile.descripcion for profile in profilesCollection track by profile.id"></select >
+		                      </div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+		                        <label for="selectVende">Cantidad Maxima de Conexiones</label>
+								<input type="number" min="1" class="form-control form-control-sm" placeholder="Cantidad Maxima de Conexiones" ng-model="newModel.max_cantidad_conexiones"/>
+		                      </div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+		                        <label for="selectVende">Sucursal</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Sucursal" ng-model="newModel.sucursal"/>
+		                      </div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+		                        <label for="selectVende">Bloqueado</label>
+								<!-- <input type="text" class="form-control form-control-sm" placeholder="Bloqueado" ng-model="newModel.bloqueado"/> -->
+								<select class="form-control input-sm" ng-model="newModel.bloqueado">
+		                          <option value="0">No</option>
+		                          <option value="1">Si</option>
+		                        </select>
 		                      </div>
 						</div>
 					</div>

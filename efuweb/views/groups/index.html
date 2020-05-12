@@ -97,14 +97,14 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="form-group">
-		                        <label for="selectVende">Nombre del Programa</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Programa" ng-model="searchModel.descripcion"/>
+		                        <label for="selectVende">Nombre del Grupo</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Grupo" ng-model="searchModel.descripcion"/>
 		                      </div>
 						</div>
 						<div class="col-xs-12">
 							<div class="form-group">
-		                        <label for="selectVende">Alias del Programa</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Alias del Programa" ng-model="searchModel.codigo"/>
+		                        <label for="selectVende">Alias del Grupo</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Alias del Grupo" ng-model="searchModel.codigo"/>
 		                      </div>
 						</div>
 					</div>
@@ -178,7 +178,8 @@
 				</div>
 				<div class="modal-footer" style="padding: 7px;">
 					<a href="javascript:;" class="btn btn-white btn-sm" data-dismiss="modal">Cancelar</a>
-					<a href="javascript:;" class="btn btn-danger btn-sm" ng-click="btnConfirmNew()">Guardar</a>
+					<a href="javascript:;" class="btn btn-danger btn-sm" ng-click="btnConfirmNew()" ng-if="!loading">Guardar</a>
+					<a href="javascript:;" class="btn btn-danger btn-sm" ng-if="loading"><img src="../assets/img/ajax-loader.gif" alt=""></a>
 				</div>
 			</div>
 		</div>
