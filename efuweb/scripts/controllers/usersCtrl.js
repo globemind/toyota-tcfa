@@ -472,7 +472,7 @@ function UsersCtrl ($scope, $window, $cookies, $location, $stateParams, $state, 
     $scope.newModel = {
       aduserSelected: '',
       profileSelected: '',
-      max_cantidad_conexiones: 1,
+      maxCantidadConexiones: 1,
       bloqueado: '0',
       sucursal: '',
     }
@@ -481,11 +481,11 @@ function UsersCtrl ($scope, $window, $cookies, $location, $stateParams, $state, 
 
   $scope.btnConfirmNew = function (){ 
     if(validateNewForm()){
-      $scope.newModel.ad_cuenta = $scope.newModel.aduserSelected.adCuenta;
-      $scope.newModel.security_identifier = $scope.newModel.aduserSelected.securityIdentifier;
+      $scope.newModel.adCuenta = $scope.newModel.aduserSelected.adCuenta;
+      $scope.newModel.securityIdentifier = $scope.newModel.aduserSelected.securityIdentifier;
       $scope.newModel.apellido = $scope.newModel.aduserSelected.apellido;
       $scope.newModel.nombres = $scope.newModel.aduserSelected.nombres;
-      $scope.newModel.id_acc_perfil = $scope.newModel.profileSelected.id;
+      $scope.newModel.idAccPerfil = $scope.newModel.profileSelected.id;
       UserService.setUserSLC($scope.newModel)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
@@ -561,7 +561,7 @@ function UsersCtrl ($scope, $window, $cookies, $location, $stateParams, $state, 
 
     if($scope.newModel.aduserSelected.adCuenta == '' || angular.isUndefined($scope.newModel.aduserSelected.adCuenta) || $scope.newModel.aduserSelected.adCuenta == null) { rta = false;}
     if($scope.newModel.profileSelected.id == '' || angular.isUndefined($scope.newModel.profileSelected.id) || $scope.newModel.profileSelected.id == null) { rta = false;}
-    if($scope.newModel.max_cantidad_conexiones == '' || angular.isUndefined($scope.newModel.max_cantidad_conexiones) || $scope.newModel.max_cantidad_conexiones == null) { rta = false;}
+    if($scope.newModel.maxCantidadConexiones == '' || angular.isUndefined($scope.newModel.maxCantidadConexiones) || $scope.newModel.maxCantidadConexiones == null) { rta = false;}
     if($scope.newModel.sucursal == '' || angular.isUndefined($scope.newModel.sucursal) || $scope.newModel.sucursal == null) { rta = false;}
     if($scope.newModel.bloqueado == '' || angular.isUndefined($scope.newModel.bloqueado) || $scope.newModel.bloqueado == null) { rta = false;}
 
