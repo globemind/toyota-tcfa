@@ -35,6 +35,8 @@ function MenuCtrl ($scope, $window, $cookies, $location, $rootScope, $state, Use
 			$state.go('app.configuration.programs', { param: pparam });
 		}else if(pprogram == 'usr001'){
 			$state.go('app.configuration.users', { param: pparam });
+		}else if(pprogram == 'gxp001'){
+			$state.go('app.configuration.grupoperfil', { param: pparam, prespective: 'both' });
 		}
 		
 	}

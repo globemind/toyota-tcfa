@@ -151,26 +151,28 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
         }]
       }
     })
-
-    /*.state('app.programs', {
-      url: '/programs/:program/:param',
-      controller: 'programsCtrl',
+    
+    .state('app.configuration.grupoperfil', {
+      url: '/grupoperfil/:param/:prespective',
+      controller: 'grupoperfilCtrl',
       data: {
-        pageTitle: 'Programas'
+        pageTitle: 'Grupos por Perfiles'
       },
-      templateUrl: 'views/programs/index.html',
+      templateUrl: 'views/grupoxperfil/index.html',
       resolve: {
         service: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load({
             serie: true,
             files: [
-              'scripts/services/programService.js',
-              'scripts/controllers/programsCtrl.js',
+              'scripts/services/profileService.js',
+              'scripts/services/groupService.js',
+              'scripts/services/grupoperfilService.js',
+              'scripts/controllers/grupoperfilCtrl.js',
             ]
           });
         }]
       }
-    })*/
+    })
 
 }]);
 
