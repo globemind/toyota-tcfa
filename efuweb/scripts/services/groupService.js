@@ -10,6 +10,10 @@ function GroupService ($http, $location, $cookies) {
 		return  $http.get(apiUrl+'api/Grupos/', config);
 	};
 
+	groupsResponse.getGrupoxId = function (id) {
+		return  $http.get(apiUrl+'api/Grupos/'+id, config);
+	};
+
 	//TODOS
 	groupsResponse.getGruposTodos = function (porigen, pprograma, psearch) {
 		return  $http.get(apiUrl+'api/Grupos/Origen/'+porigen+'/Programa/'+pprograma+'?codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
@@ -38,6 +42,10 @@ function GroupService ($http, $location, $cookies) {
 
 	groupsResponse.setGrupoSLC = function (model) {
 		return  $http.post(apiUrl+'api/GruposSLC/', model, config);
+	};
+
+	groupsResponse.getGrupoSLCxId = function (id) {
+		return  $http.get(apiUrl+'api/GruposSLC/'+id, config);
 	};
 
 

@@ -32,7 +32,8 @@ function GroupPerfilService ($http, $location, $cookies) {
 	};
 	
 	response.getGrupoxPerfilxIdPrespectiva = function (pid, pprespectiva) {
-		return  $http.get(apiUrl+'api/GruposXPerfil/'+pid+'/perspectiva/'+pprespectiva, config);
+		return  $http.get(apiUrl+'api/Perfiles/'+pid, config);
+		// return  $http.get(apiUrl+'api/GruposXPerfil/'+pid+'/perspectiva/'+pprespectiva, config);
 	};
 
 	//SLC

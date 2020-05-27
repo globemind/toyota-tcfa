@@ -137,7 +137,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Editar Grupo de Programas</h4>
+					<h4 class="modal-title">Editar Grupo x Perfil</h4>
 					<a href="" class="btn btn-danger btn-icon btn-circle btn-xs" data-dismiss="modal"><i class="fa fa-times"></i></a>
 					<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#fff;">×</button> -->
 				</div>
@@ -145,13 +145,13 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="form-group">
-		                        <label for="selectVende">Perfil del Usuario</label>
+		                        <label for="selectVende">Perfil</label>
 								<select class="form-control form-control-sm" ng-model="cardEdit.profileSelected" ng-options="profile.descripcion for profile in profilesCollection track by profile.id" ng-disabled="actionSelected != 2"></select >
 		                    </div>
 						</div>
 						<div class="col-xs-12">
 							<div class="form-group">
-		                        <label for="selectVende">Perfil del Usuario</label>
+		                        <label for="selectVende">Grupo</label>
 								<select class="form-control form-control-sm" ng-model="cardEdit.groupSelected" ng-options="group.descripcion for group in groupsCollection track by group.id" ng-disabled="actionSelected != 2"></select >
 		                    </div>
 						</div>
@@ -168,11 +168,11 @@
 
 
 	<!-- Modal EDIT INFORMATION-->
-	<div class="modal fade" id="editPrespectiveModal">
+	<div class="modal fade" id="editPrespectiveGrupoModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Ver Grupos por Perfiles</h4>
+					<h4 class="modal-title">Ver Perfiles x Grupos</h4>
 					<a href="" class="btn btn-danger btn-icon btn-circle btn-xs" data-dismiss="modal"><i class="fa fa-times"></i></a>
 					<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#fff;">×</button> -->
 				</div>
@@ -180,14 +180,14 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="form-group">
-		                        <label for="selectVende">Nombre del <span ng-if="prespective == 'grupos'">Grupo</span><span ng-if="prespective == 'perfiles'">Perfil</span></label>
-								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Grupo" ng-model="cardEdit.perspectiva.descripcion" ng-disabled="true"/>
+		                        <label for="selectVende">Nombre del Grupo</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Grupo" ng-model="cardEdit.descripcion" ng-disabled="true"/>
 		                      </div>
 						</div>
 						<div class="col-xs-12">
 							<div class="form-group">
-		                        <label for="selectVende">Alias del <span ng-if="prespective == 'grupos'">Grupo</span><span ng-if="prespective == 'perfiles'">Perfil</span></label>
-								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Grupo" ng-model="cardEdit.perspectiva.codigo" ng-disabled="true"/>
+		                        <label for="selectVende">Alias del Grupo</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Grupo" ng-model="cardEdit.codigo" ng-disabled="true"/>
 		                      </div>
 						</div>
 					</div>
@@ -201,9 +201,58 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="gradeX odd" role="row" ng-repeat="card in cardEdit.relacionados">
-									<td>{{card.codigo}}</td>
-									<td>{{card.descripcion}}</td>
+								<tr class="gradeX odd" role="row" ng-repeat="card in relacionados">
+									<td>{{card.idAccPerfilNavigation.codigo}}</td>
+									<td>{{card.idAccPerfilNavigation.descripcion}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer" style="padding: 7px;">
+					<a href="javascript:;" class="btn btn-white btn-sm" data-dismiss="modal">Cancelar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal EDIT INFORMATION-->
+	<div class="modal fade" id="editPrespectivePerfilModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Ver Grupos por Perfiles</h4>
+					<a href="" class="btn btn-danger btn-icon btn-circle btn-xs" data-dismiss="modal"><i class="fa fa-times"></i></a>
+					<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#fff;">×</button> -->
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+		                        <label for="selectVende">Nombre del Perfil</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Grupo" ng-model="cardEdit.descripcion" ng-disabled="true"/>
+		                      </div>
+						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+		                        <label for="selectVende">Alias del Perfil</label>
+								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Grupo" ng-model="cardEdit.codigo" ng-disabled="true"/>
+		                      </div>
+						</div>
+					</div>
+					<div class="row">
+						<h4>Relacionados</h4>
+						<table id="data-table-fixed-header" class="table table-striped table-bordered table-td-valign-middle dataTable no-footer dtr-inline" role="grid">
+							<thead>
+								<tr role="row">
+									<th> Codigo </th>
+									<th> Descripcion </th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="gradeX odd" role="row" ng-repeat="card in relacionados">
+									<td>{{card.idAccGrupoNavigation.codigo}}</td>
+									<td>{{card.idAccGrupoNavigation.descripcion}}</td>
 								</tr>
 							</tbody>
 						</table>

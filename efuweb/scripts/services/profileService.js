@@ -10,6 +10,10 @@ function ProfileService ($http, $location, $cookies) {
 		return  $http.get(apiUrl+'api/Perfiles/', config);
 	};
 
+	response.getPerfilexId = function (id) {
+		return  $http.get(apiUrl+'api/Perfiles/'+id, config);
+	};
+
 	//TODOS
 	response.getPerfilesTodos = function (porigen, pprograma, psearch) {
 		return  $http.get(apiUrl+'api/Perfiles/Origen/'+porigen+'/Programa/'+pprograma+'?codigo='+psearch.codigo+'&descripcion='+psearch.descripcion, config);
@@ -38,6 +42,10 @@ function ProfileService ($http, $location, $cookies) {
 
 	response.setPerfileSLC = function (model) {
 		return  $http.post(apiUrl+'api/PerfilesSLC/', model, config);
+	};
+
+	response.getPerfileSLCxId = function (id) {
+		return  $http.get(apiUrl+'api/PerfilesSLC/'+id, config);
 	};
 
 

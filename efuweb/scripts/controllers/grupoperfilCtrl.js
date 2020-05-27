@@ -146,7 +146,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
     .then((willDelete) => {
       if (willDelete) { // DELETE
         if(action == 3){
-          GroupPerfilService.deleteGrupo($scope.cardCollection[idx])
+          GroupPerfilService.deleteGrupo($scope.cardCollection[idx].perspectiva)
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -171,7 +171,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
               } 
             });
         }else if(action == 5){
-          GroupPerfilService.deleteGrupoSLC($scope.cardCollection[idx], 'eliminar')
+          GroupPerfilService.deleteGrupoSLC($scope.cardCollection[idx].perspectiva, 'eliminar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -196,7 +196,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
               } 
             });
         }else if(action == 6){
-          GroupPerfilService.deleteGrupoSLC($scope.cardCollection[idx], 'autorizar')
+          GroupPerfilService.deleteGrupoSLC($scope.cardCollection[idx].perspectiva, 'autorizar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -221,7 +221,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
               } 
             });
         }else if(action == 7){
-          GroupPerfilService.deleteGrupoSLC($scope.cardCollection[idx], 'desautorizar')
+          GroupPerfilService.deleteGrupoSLC($scope.cardCollection[idx].perspectiva, 'desautorizar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -374,7 +374,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
 
   $scope.btnEditModal = function (idx, action){ 
     if($scope.resultType == 'all'){
-      GroupPerfilService.getGrupoxPerfilxId($scope.cardCollection[idx].id)
+      GroupPerfilService.getGrupoxPerfilxId($scope.cardCollection[idx].perspectiva.id)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
             $scope.cardEdit = response.data;
@@ -440,42 +440,14 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
 
   $scope.btnEditPrespectiveModal = function (idx, action){ 
     if($scope.resultType == 'all'){
-      GroupPerfilService.getGrupoxPerfilxIdPrespectiva($scope.cardCollection[idx].perspectiva.id, $scope.prespective)
-        .then(function(response){
-          if(response.status >= 200 && response.status < 300 ){
-            $scope.cardEdit = response.data;
-            $scope.actionSelected = action;
-            $('#editPrespectiveModal').modal('show'); 
-          }else{
-            swal({
-              title: "Atencion",
-              text: response.statusText,
-              icon: "warning",
-              buttons: true,
-              // dangerMode: true,
-            })
-          }
-        })/*
-        .catch(function (error) { 
-          if(error.status == 400){ $scope.$emit('error404'); }
-          else{
-              swal({
-                title: "ERROR",
-                text: error.data,
-                icon: "error",
-                // buttons: true,
-                dangerMode: true,
-              });
-          } 
-        });*/
-      }else{
-        GroupPerfilService.getGruposXPerfilSLCxIdPrespectiva($scope.cardCollection[idx].perspectiva.id, $scope.prespective)
+      if($scope.prespective == 'grupos'){
+         GroupService.getGrupoxId($scope.cardCollection[idx].perspectiva.id)
           .then(function(response){
             if(response.status >= 200 && response.status < 300 ){
               $scope.cardEdit = response.data;
-              $scope.cardEdit.profileSelected = {id: $scope.cardEdit.idAccPerfil};
+              $scope.relacionados = response.data.accGruposXPerfil;
               $scope.actionSelected = action;
-              $('#editPrespectiveModal').modal('show'); 
+              $('#editPrespectiveGrupoModal').modal('show'); 
             }else{
               swal({
                 title: "Atencion",
@@ -498,6 +470,99 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 });
             } 
           });
+      }else if($scope.prespective == 'perfiles'){
+        ProfileService.getPerfilexId($scope.cardCollection[idx].perspectiva.id)
+          .then(function(response){
+            if(response.status >= 200 && response.status < 300 ){
+              $scope.cardEdit = response.data;
+              $scope.relacionados = response.data.accGruposXPerfil;
+              $scope.actionSelected = action;
+              $('#editPrespectivePerfilModal').modal('show'); 
+            }else{
+              swal({
+                title: "Atencion",
+                text: response.statusText,
+                icon: "warning",
+                buttons: true,
+                // dangerMode: true,
+              })
+            }
+          })
+          .catch(function (error) { 
+            if(error.status == 400){ $scope.$emit('error404'); }
+            else{
+                swal({
+                  title: "ERROR",
+                  text: error.data,
+                  icon: "error",
+                  // buttons: true,
+                  dangerMode: true,
+                });
+            } 
+          });
+        }
+      }else{
+        if($scope.prespective == 'grupos'){ 
+          GroupService.getGrupoSLCxId($scope.cardCollection[idx].perspectiva.id)
+            .then(function(response){
+              if(response.status >= 200 && response.status < 300 ){
+                $scope.cardEdit = response.data;
+                $scope.relacionados = response.data.accGruposXPerfil;
+                $scope.actionSelected = action;
+                $('#editPrespectiveGrupoModal').modal('show'); 
+              }else{
+                swal({
+                  title: "Atencion",
+                  text: response.statusText,
+                  icon: "warning",
+                  buttons: true,
+                  // dangerMode: true,
+                })
+              }
+            })
+            .catch(function (error) { 
+              if(error.status == 400){ $scope.$emit('error404'); }
+              else{
+                  swal({
+                    title: "ERROR",
+                    text: error.data,
+                    icon: "error",
+                    // buttons: true,
+                    dangerMode: true,
+                  });
+              } 
+            });
+        }else if($scope.prespective == 'perfiles'){
+          ProfileService.getPerfilexId($scope.cardCollection[idx].perspectiva.id)
+            .then(function(response){
+              if(response.status >= 200 && response.status < 300 ){
+                $scope.cardEdit = response.data;
+                $scope.relacionados = response.data.accGruposXPerfil;
+                $scope.actionSelected = action;
+                $('#editPrespectivePerfilModal').modal('show'); 
+              }else{
+                swal({
+                  title: "Atencion",
+                  text: response.statusText,
+                  icon: "warning",
+                  buttons: true,
+                  // dangerMode: true,
+                })
+              }
+            })
+            .catch(function (error) { 
+              if(error.status == 400){ $scope.$emit('error404'); }
+              else{
+                  swal({
+                    title: "ERROR",
+                    text: error.data,
+                    icon: "error",
+                    // buttons: true,
+                    dangerMode: true,
+                  });
+              } 
+            });
+        }
       }
   }
 
