@@ -27,6 +27,10 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
     codigo: '',
     descripcion: '',
   };
+  $scope.newModel = {
+    profileSelected: '',
+    groupSelected: '',
+  };
 
   ProfileService.getPerfiles()
     .then(function(response){
@@ -651,7 +655,11 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
   $scope.btnConfirmNew = function (){ 
     if(validateNewForm()){
       $scope.loading = true;
-      GroupPerfilService.setGrupoSLC($scope.newModel)
+      var model = {
+        idAccPerfil: $scope.newModel.profileSelected.id,
+        idAccGrupo: $scope.newModel.groupSelected.id,
+      }
+      GroupPerfilService.setGruposXPerfilSLC(model)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
             $scope.loading = false;
@@ -719,8 +727,8 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
   function validateNewForm (){
     var rta = true;
 
-    if($scope.newModel.codigo == '' || angular.isUndefined($scope.newModel.codigo) || $scope.newModel.codigo == null) { rta = false;}
-    if($scope.newModel.descripcion == '' || angular.isUndefined($scope.newModel.descripcion) || $scope.newModel.descripcion == null) { rta = false;}
+    if($scope.newModel.profileSelected == '' || angular.isUndefined($scope.newModel.profileSelected) || $scope.newModel.profileSelected == null) { rta = false;}
+    if($scope.newModel.groupSelected == '' || angular.isUndefined($scope.newModel.groupSelected) || $scope.newModel.groupSelected == null) { rta = false;}
 
     return rta;
   }

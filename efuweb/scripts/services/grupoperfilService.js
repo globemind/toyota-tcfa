@@ -53,7 +53,7 @@ function GroupPerfilService ($http, $location, $cookies) {
 		return  $http.put(apiUrl+'api/GruposXPerfilSLC/'+model.id, model, config);
 	};
 
-	response.setGrupoSLC = function (model) {
+	response.setGruposXPerfilSLC = function (model) {
 		return  $http.post(apiUrl+'api/GruposXPerfilSLC/', model, config);
 	};
 

@@ -272,22 +272,22 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Nuevo Grupo</h4>
+					<h4 class="modal-title">Nuevo Grupo x Perfil</h4>
 					<a href="" class="btn btn-danger btn-icon btn-circle btn-xs" data-dismiss="modal"><i class="fa fa-times"></i></a>
 				</div>
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="form-group">
-		                        <label for="selectVende">Nombre del Grupo</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Nombre del Grupo" ng-model="newModel.descripcion"/>
-		                      </div>
+		                        <label for="selectVende">Perfil</label>
+								<select class="form-control form-control-sm" ng-model="newModel.profileSelected" ng-options="profile.descripcion for profile in profilesCollection track by profile.id"></select >
+		                    </div>
 						</div>
 						<div class="col-xs-12">
 							<div class="form-group">
-		                        <label for="selectVende">Alias del Grupo</label>
-								<input type="text" class="form-control form-control-sm" placeholder="Alias del Grupo" ng-model="newModel.codigo"/>
-		                      </div>
+		                        <label for="selectVende">Grupo</label>
+								<select class="form-control form-control-sm" ng-model="newModel.groupSelected" ng-options="group.descripcion for group in groupsCollection track by group.id"></select>
+		                    </div>
 						</div>
 					</div>
 				</div>
