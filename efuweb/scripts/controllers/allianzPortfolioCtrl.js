@@ -27,8 +27,52 @@ function AllianzPortfolioCtrl($scope, $window, $cookies, $location, $stateParams
     // upload later on form submit or something similar
     $scope.submit = function() {
         if ($scope.form.file.$valid && $scope.file) {
-            $scope.upload($scope.file);
+            /*Debo ver si el archivo ya se proceso previamente*/
+            AllianzPortfolioService.getArchivoProcesado($scope.file.name)
+                .then(function(response) {
+                    if (response.data == "200") {
+                        swal({
+                            title: "Atencion",
+                            text: "El archivo " + $scope.file.name + " ya fue procesado. Desea reprocesarlo?",
+                            icon: "warning",
+                            buttons: true,
+                            // dangerMode: true,
+                        }).then((result) => {
+                            if (result) {
+                                $scope.upload($scope.file);
+                            }
+                        })
+                    } else if (response.data == "201") {
+                        $scope.upload($scope.file);
+                    } else {
+                        swal({
+                            title: "ERROR",
+                            text: "Ocurrió un error al validar el archivo: ".response.data,
+                            icon: "error",
+                            // buttons: true,
+                            dangerMode: true,
+                        });
+                    }
+
+                })
+                .catch(function(error) {
+                    if (error.status == 400) { $scope.$emit('error404'); } else {
+                        swal({
+                            title: "ERROR",
+                            text: error.data,
+                            icon: "error",
+                            // buttons: true,
+                            dangerMode: true,
+                        });
+                    }
+                });
+
         }
+    };
+
+
+    var config = {
+        headers: { 'Authorization': $cookies.getObject('token') }
     };
 
     // upload on file select or drop

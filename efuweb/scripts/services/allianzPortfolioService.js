@@ -6,8 +6,8 @@ function AllianzPortfolioService($http, $location, $cookies) {
         headers: { 'Authorization': $cookies.getObject('token') }
     };
 
-    allianzPortfolioResponse.getGrupos = function() {
-        return $http.get(apiUrl + 'api/Grupos/', config);
+    allianzPortfolioResponse.getArchivoProcesado = function(file) {
+        return $http.get(apiUrl + 'api/Upload/Procesado/' + file, config);
     };
     /*
     	groupsResponse.getGrupoxId = function (id) {
