@@ -180,10 +180,10 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
             abstract: true
         })
         .state('app.insurance.allianzPortfolio', {
-            url: '/groups/:param',
+            url: '/portfolio/:param',
             controller: 'allianzPortfolioCtrl',
             data: {
-                pageTitle: 'Allianz'
+                pageTitle: 'Allianz Cartera'
             },
             templateUrl: 'views/allianzPortfolio/index.html',
             resolve: {
@@ -193,6 +193,25 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
                         files: [
                             'scripts/services/allianzPortfolioService.js',
                             'scripts/controllers/allianzPortfolioCtrl.js',
+                        ]
+                    });
+                }]
+            }
+        })
+        .state('app.insurance.allianzCommission', {
+            url: '/commission/:param',
+            controller: 'allianzCommissionCtrl',
+            data: {
+                pageTitle: 'Allianz Comisiones'
+            },
+            templateUrl: 'views/allianzCommission/index.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'scripts/services/allianzCommissionService.js',
+                            'scripts/controllers/allianzCommissionCtrl.js',
                         ]
                     });
                 }]

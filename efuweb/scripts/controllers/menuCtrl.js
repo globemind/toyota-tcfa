@@ -35,6 +35,8 @@ function MenuCtrl($scope, $window, $cookies, $location, $rootScope, $state, User
             $state.go('app.configuration.users', { param: pparam });
         } else if (pprogram == 'sga001') {
             $state.go('app.insurance.allianzPortfolio', { param: pparam });
+        } else if (pprogram == 'sga002') {
+            $state.go('app.insurance.allianzCommission', { param: pparam });
         } else if (pprogram == 'gxp001') {
             $state.go('app.configuration.grupoperfil', { param: pparam, prespective: 'both' });
         }
