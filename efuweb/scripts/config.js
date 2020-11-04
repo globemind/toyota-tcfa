@@ -8,7 +8,7 @@ angular.module('mainapp', [
     'ui.router.state.events',
     'oc.lazyLoad',
     'pascalprecht.translate',
-    'ngFileUpload'
+    'ngFileUpload', 'ui.bootstrap'
 ]);
 
 angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$translateProvider', function($stateProvider, $urlRouterProvider, $translateProvider) {
@@ -217,7 +217,25 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
                 }]
             }
         })
-
+        .state('app.insurance.triumphNews', {
+            url: '/triumphNews/:param',
+            controller: 'triumphNewsCtrl',
+            data: {
+                pageTitle: 'Triunfo Novedades'
+            },
+            templateUrl: 'views/triumphNews/index.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'scripts/services/triumphNewsService.js',
+                            'scripts/controllers/triumphNewsCtrl.js',
+                        ]
+                    });
+                }]
+            }
+        })
 }]);
 
 angular.module('mainapp').factory('setting', ['$rootScope', function($rootScope) {
