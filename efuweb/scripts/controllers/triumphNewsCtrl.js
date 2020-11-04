@@ -24,7 +24,7 @@ function TriumphNewsCtrl($scope, $window, $cookies, $location, $stateParams, $st
                     $scope.dateFrom = response.data[0].vigenciaDesde;
                 } else {
                     $scope.dateFrom = new Date();
-                    $scope.dateFrom.setDate($scope.dateFrom.getDate() - 90);
+                    $scope.dateFrom.setDate($scope.dateFrom.getDate() - 180);
                     $scope.dateFrom = $filter('date')($scope.dateFrom, 'dd/MM/yyyy');
                 }
             }
