@@ -174,6 +174,28 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
       }
     })
 
+    .state('app.configuration.programsactions', {
+      url: '/programsactions/:param/:prespective',
+      controller: 'programsactionsCtrl',
+      data: {
+        pageTitle: 'Programas Acciones'
+      },
+      templateUrl: 'views/programsactions/index.html',
+      resolve: {
+        service: ['$ocLazyLoad', function ($ocLazyLoad) {
+          return $ocLazyLoad.load({
+            serie: true,
+            files: [
+              'scripts/services/programService.js',
+              'scripts/services/actionService.js',
+              'scripts/services/programactionService.js',
+              'scripts/controllers/programsactionsCtrl.js',
+            ]
+          });
+        }]
+      }
+    })
+
 }]);
 
 angular.module('mainapp').factory('setting', ['$rootScope', function($rootScope) {

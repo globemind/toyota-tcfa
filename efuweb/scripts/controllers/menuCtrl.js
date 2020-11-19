@@ -23,7 +23,6 @@ function MenuCtrl ($scope, $window, $cookies, $location, $rootScope, $state, Use
 		});
 
 	$scope.btnMenuAction = function (pprogram, pparam, id){
-
 		UserService.setProgramasRecientes(id);
 		if(pprogram == 'grp001'){
 			$state.go('app.configuration.groups', { param: pparam });
@@ -37,8 +36,13 @@ function MenuCtrl ($scope, $window, $cookies, $location, $rootScope, $state, Use
 			$state.go('app.configuration.users', { param: pparam });
 		}else if(pprogram == 'gxp001'){
 			$state.go('app.configuration.grupoperfil', { param: pparam, prespective: 'both' });
+		}else if(pprogram == 'pra001'){
+			$state.go('app.configuration.programsactions', { param: pparam, prespective: 'both' });
+		}else if(pprogram == 'pag001'){
+			$state.go('app.configuration.programsactionsgrupos', { param: pparam, prespective: 'both' });
+		}else if(pprogram == 'pxm001'){
+			$state.go('app.configuration.programasmodulos', { param: pparam, prespective: 'both' });
 		}
-		
 	}
 	
 }
