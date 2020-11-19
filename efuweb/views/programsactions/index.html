@@ -152,7 +152,7 @@
 						<div class="col-xs-12">
 							<div class="form-group">
 		                        <label for="selectVende">Acción</label>
-								<select class="form-control form-control-sm" ng-model="cardEdit.groupSelected" ng-options="group.descripcion for group in groupsCollection track by group.id" ng-disabled="actionSelected != 2"></select >
+								<select class="form-control form-control-sm" ng-model="cardEdit.actionSelected" ng-options="action.descripcion for action in actionsCollection track by action.id" ng-disabled="actionSelected != 2"></select >
 		                    </div>
 						</div>
 					</div>

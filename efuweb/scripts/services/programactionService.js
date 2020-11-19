@@ -45,8 +45,6 @@ function ProgramActionService ($http, $location, $cookies) {
 	};
 
 	response.deleteProgramActionSLC = function (model, verb) {
-		console.log("model", model);
-		console.log("verb", verb);
 		return  $http.delete(apiUrl+'api/ProgramasAccionesSLC/'+verb+'/'+model.perspectiva.id, config);
 	};
 

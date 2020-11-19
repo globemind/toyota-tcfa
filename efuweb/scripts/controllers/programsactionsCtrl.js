@@ -257,9 +257,6 @@ function ProgramsactionsCtrl ($scope, $window, $cookies, $location, $stateParams
   }
 
   $scope.btnAuthCard = function(idx, action){
-    console.log("idx", idx);
-    console.log("action", action);
-    console.log("$scope.cardCollection[idx]", $scope.cardCollection[idx]);
     swal({
       title: "¿Esta seguro de autorizar esta modificación?",
       text: "",
@@ -452,7 +449,7 @@ function ProgramsactionsCtrl ($scope, $window, $cookies, $location, $stateParams
           .then(function(response){
             if(response.status >= 200 && response.status < 300 ){
               $scope.cardEdit = response.data;
-              $scope.relacionados = response.data.accAcciones;
+              $scope.relacionados = response.data.accProgramasAcciones;
               $scope.actionSelected = action;
               $('#editPrespectiveProgramaModal').modal('show');
             }else{
@@ -514,7 +511,7 @@ function ProgramsactionsCtrl ($scope, $window, $cookies, $location, $stateParams
           .then(function(response){
             if(response.status >= 200 && response.status < 300 ){
               $scope.cardEdit = response.data;
-              $scope.relacionados = response.data.accAcciones;
+              $scope.relacionados = response.data.accProgramasAcciones;
               $scope.actionSelected = action;
               $('#editPrespectiveProgramaModal').modal('show');
             }else{
