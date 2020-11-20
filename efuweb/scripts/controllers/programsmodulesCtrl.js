@@ -1,12 +1,12 @@
-angular.module('mainapp').factory('GroupPerfilService', GroupPerfilService);
-angular.module('mainapp').factory('ProfileService', ProfileService);
-angular.module('mainapp').factory('GroupService', GroupService);
+angular.module('mainapp').factory('ProgramModuleService', ProgramModuleService);
+angular.module('mainapp').factory('ProgramService', ProgramService);
+angular.module('mainapp').factory('ModuloService', ModuloService);
 
-function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $state, GroupPerfilService, ProfileService, GroupService) {
-	
-  if(angular.isUndefined($cookies.getObject('name')) || 
-    angular.isUndefined($cookies.getObject('uid')) || 
-    angular.isUndefined($cookies.getObject('token') ) 
+function ProgramsmodulesCtrl ($scope, $window, $cookies, $location, $stateParams, $state, ProgramModuleService, ProgramService, ModuloService) {
+
+  if(angular.isUndefined($cookies.getObject('name')) ||
+    angular.isUndefined($cookies.getObject('uid')) ||
+    angular.isUndefined($cookies.getObject('token') )
     ){
     $scope.$emit('logout');
   }
@@ -18,8 +18,8 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
   $scope.resultType = $stateParams.param;
   $scope.prespective = $stateParams.prespective;
  	$scope.cardCollection = [];
-  $scope.profilesCollection  = '';
-  $scope.groupsCollection  = '';
+  $scope.programsCollection  = '';
+  $scope.modulesCollection  = '';
   $scope.acctionsCollection = '';
   $scope.loading = false;
   $scope.cardEdit = '';
@@ -28,31 +28,31 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
     descripcion: '',
   };
   $scope.newModel = {
-    profileSelected: '',
-    groupSelected: '',
+    programSelected: '',
+    moduleSelected: '',
   };
 
-  ProfileService.getPerfiles()
+  ProgramService.getPrograms()
     .then(function(response){
-      if(response.status == 200){ $scope.profilesCollection = response.data; }
+      if(response.status == 200){ $scope.programsCollection = response.data; }
     });
 
-  GroupService.getGrupos()
+  ModuloService.getModulos()
     .then(function(response){
-      if(response.status == 200){ $scope.groupsCollection = response.data; }
+      if(response.status == 200){ $scope.modulesCollection = response.data; }
     });
 
-  $scope.btnSearchGroups = function(){
+  $scope.btnSearchPrograms = function(){
     if($scope.prespective == 'both'){
       if($scope.resultType == 'all'){
-        GroupPerfilService.getGruposTodos('T', 'gxp001', $scope.searchModel)
+        ProgramModuleService.getProgramsModulesTodos('T', 'pxm001', $scope.searchModel)
           .then(function(response){
             if(response.status == 200){
               $scope.cardCollection = response.data.datos;
               $scope.acctionsCollection = setActions (response.data.acciones);
             }
           })
-        .catch(function (error) { 
+        .catch(function (error) {
           if(error.status == 400){ $scope.$emit('error404'); }
           else{
               swal({
@@ -62,19 +62,19 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 // buttons: true,
                 dangerMode: true,
               });
-          } 
+          }
         });
       }else{
         var pcountType = "A";
         if($stateParams.param == 'pend'){ pcountType = "P"; }
-        GroupPerfilService.getGruposSLC( pcountType, 'gxp001', $scope.searchModel)
+        ProgramModuleService.getProgramsModulesSLC( pcountType, 'pxm001', $scope.searchModel)
           .then(function(response){
             if(response.status == 200){
               $scope.cardCollection = response.data.datos;
               $scope.acctionsCollection = setActions (response.data.acciones);
             }
           })
-        .catch(function (error) { 
+        .catch(function (error) {
           if(error.status == 400){ $scope.$emit('error404'); }
           else{
               swal({
@@ -84,21 +84,21 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 // buttons: true,
                 dangerMode: true,
               });
-          } 
+          }
         });
       }
-    }else{ 
-      var prespectiva = "perfiles";
-      if($scope.prespective == 'grupos'){ prespectiva = "grupos"}
+    }else{
+      var prespectiva = "programas";
+      if($scope.prespective == 'modulos'){ prespectiva = "modulos"}
       if($scope.resultType == 'all'){
-        GroupPerfilService.getGruposTodosPrespectiva('T', 'gxp001', $scope.searchModel, prespectiva)
+        ProgramModuleService.getProgramsModulesTodosPrespectiva('T', 'pxm001', $scope.searchModel, prespectiva)
           .then(function(response){
             if(response.status == 200){
               $scope.cardCollection = response.data.datos;
               $scope.acctionsCollection = setActions (response.data.acciones);
             }
           })
-        .catch(function (error) { 
+        .catch(function (error) {
           if(error.status == 400){ $scope.$emit('error404'); }
           else{
               swal({
@@ -108,19 +108,19 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 // buttons: true,
                 dangerMode: true,
               });
-          } 
+          }
         });
       }else{
         var pcountType = "A";
         if($stateParams.param == 'pend'){ pcountType = "P"; }
-        GroupPerfilService.getGruposSLCPrespectiva( pcountType, 'gxp001', $scope.searchModel, prespectiva)
+        ProgramModuleService.getProgramsModulesSLCPrespectiva( pcountType, 'pxm001', $scope.searchModel, prespectiva)
           .then(function(response){
             if(response.status == 200){
               $scope.cardCollection = response.data.datos;
               $scope.acctionsCollection = setActions (response.data.acciones);
             }
           })
-        .catch(function (error) { 
+        .catch(function (error) {
           if(error.status == 400){ $scope.$emit('error404'); }
           else{
               swal({
@@ -130,16 +130,16 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 // buttons: true,
                 dangerMode: true,
               });
-          } 
+          }
         });
       }
 
     }
   }
-  
+
 // _____________________
 
-  $scope.btnRemoveCard = function(idx, action){ 
+  $scope.btnRemoveCard = function(idx, action){
   	swal({
       title: "Ud. esta seguro?",
       text: "Una vez eliminada no se podra recuperar la informacion!",
@@ -150,7 +150,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
     .then((willDelete) => {
       if (willDelete) { // DELETE
         if(action == 3){
-          GroupPerfilService.deleteGrupo($scope.cardCollection[idx].perspectiva)
+          ProgramModuleService.deleteProgramModule($scope.cardCollection[idx].perspectiva)
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -162,7 +162,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 })
               }else{$window.location.reload();}
             })
-            .catch(function (error) { 
+            .catch(function (error) {
               if(error.status == 400){ $scope.$emit('error404'); }
               else{
                   swal({
@@ -172,10 +172,10 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                     // buttons: true,
                     dangerMode: true,
                   });
-              } 
+              }
             });
         }else if(action == 5){
-          GroupPerfilService.deleteGrupoSLC($scope.cardCollection[idx].perspectiva, 'eliminar')
+          ProgramModuleService.deleteProgramModuleSLC($scope.cardCollection[idx].perspectiva, 'eliminar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -187,7 +187,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 })
               }else{$window.location.reload();}
             })
-            .catch(function (error) { 
+            .catch(function (error) {
               if(error.status == 400){ $scope.$emit('error404'); }
               else{
                   swal({
@@ -197,10 +197,10 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                     // buttons: true,
                     dangerMode: true,
                   });
-              } 
+              }
             });
         }else if(action == 6){
-          GroupPerfilService.deleteGrupoSLC($scope.cardCollection[idx].perspectiva, 'autorizar')
+          ProgramModuleService.deleteProgramModuleSLC($scope.cardCollection[idx].perspectiva, 'autorizar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -212,7 +212,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 })
               }else{$window.location.reload();}
             })
-            .catch(function (error) { 
+            .catch(function (error) {
               if(error.status == 400){ $scope.$emit('error404'); }
               else{
                   swal({
@@ -222,10 +222,10 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                     // buttons: true,
                     dangerMode: true,
                   });
-              } 
+              }
             });
         }else if(action == 7){
-          GroupPerfilService.deleteGrupoSLC($scope.cardCollection[idx].perspectiva, 'desautorizar')
+          ProgramModuleService.deleteProgramModuleSLC($scope.cardCollection[idx].perspectiva, 'desautorizar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -237,7 +237,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 })
               }else{$window.location.reload();}
             })
-            .catch(function (error) { 
+            .catch(function (error) {
               if(error.status == 400){ $scope.$emit('error404'); }
               else{
                   swal({
@@ -247,16 +247,16 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                     // buttons: true,
                     dangerMode: true,
                   });
-              } 
+              }
             });
         }
-      } /*else { 
+      } /*else {
         swal("Your imaginary file is safe!");
       }*/
     });
   }
 
-  $scope.btnAuthCard = function(idx, action){ 
+  $scope.btnAuthCard = function(idx, action){
     swal({
       title: "¿Esta seguro de autorizar esta modificación?",
       text: "",
@@ -267,7 +267,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
     .then((willDelete) => {
       if (willDelete) { // DELETE
         if(action == 6){
-          GroupPerfilService.deleteGrupoSLC($scope.cardCollection[idx], 'autorizar')
+          ProgramModuleService.deleteProgramModuleSLC($scope.cardCollection[idx], 'autorizar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -279,7 +279,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 })
               }else{$window.location.reload();}
             })
-            .catch(function (error) { 
+            .catch(function (error) {
               if(error.status == 400){ $scope.$emit('error404'); }
               else{
                   swal({
@@ -289,10 +289,10 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                     // buttons: true,
                     dangerMode: true,
                   });
-              } 
+              }
             });
         }else if(action == 7){
-          GroupPerfilService.deleteGrupoSLC($scope.cardCollection[idx], 'desautorizar')
+          ProgramModuleService.deleteProgramModuleSLC($scope.cardCollection[idx], 'desautorizar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -304,7 +304,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 })
               }else{$window.location.reload();}
             })
-            .catch(function (error) { 
+            .catch(function (error) {
               if(error.status == 400){ $scope.$emit('error404'); }
               else{
                   swal({
@@ -314,16 +314,16 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                     // buttons: true,
                     dangerMode: true,
                   });
-              } 
+              }
             });
         }
-      } /*else { 
+      } /*else {
         swal("Your imaginary file is safe!");
       }*/
     });
   }
 
-  $scope.btnDesAuthCard = function(idx, action){ 
+  $scope.btnDesAuthCard = function(idx, action){
     swal({
       title: "¿Esta seguro de desautorizar esta modificación?",
       text: "",
@@ -334,7 +334,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
     .then((willDelete) => {
       if (willDelete) { // DELETE
         if(action == 7){
-          GroupPerfilService.deleteGrupoSLC($scope.cardCollection[idx], 'desautorizar')
+          ProgramModuleService.deleteProgramModuleSLC($scope.cardCollection[idx], 'desautorizar')
             .then(function(response){
               if(response.status != 200){
                 swal({
@@ -346,7 +346,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 })
               }else{$window.location.reload();}
             })
-            .catch(function (error) { 
+            .catch(function (error) {
               if(error.status == 400){ $scope.$emit('error404'); }
               else{
                   swal({
@@ -356,10 +356,10 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                     // buttons: true,
                     dangerMode: true,
                   });
-              } 
+              }
             });
         }
-      } /*else { 
+      } /*else {
         swal("Your imaginary file is safe!");
       }*/
     });
@@ -367,8 +367,8 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
 
   $scope.btnSearchModal = function (){ $('#searchModal').modal('show'); }
 
-  $scope.btnConfirmSearch = function (){ 
-    $scope.btnSearchGroups()
+  $scope.btnConfirmSearch = function (){
+    $scope.btnSearchPrograms()
     $('#searchModal').modal('hide');
     $scope.searchModel = {
       codigo: '',
@@ -376,16 +376,16 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
     };
   }
 
-  $scope.btnEditModal = function (idx, action){ 
+  $scope.btnEditModal = function (idx, action){
     if($scope.resultType == 'all'){
-      GroupPerfilService.getGrupoxPerfilxId($scope.cardCollection[idx].perspectiva.id)
+      ProgramModuleService.getProgramModulexId($scope.cardCollection[idx].perspectiva.id)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
             $scope.cardEdit = response.data;
-            $scope.cardEdit.profileSelected = {id: $scope.cardEdit.idAccPerfil};
-            $scope.cardEdit.groupSelected = {id: $scope.cardEdit.idAccGrupo};
+            $scope.cardEdit.programSelected = {id: $scope.cardEdit.idAccPrograma};
+            $scope.cardEdit.moduleSelected = {id: $scope.cardEdit.idAccModulo};
             $scope.actionSelected = action;
-            $('#editModal').modal('show'); 
+            $('#editModal').modal('show');
           }else{
             swal({
               title: "Atencion",
@@ -396,7 +396,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
             })
           }
         })
-        .catch(function (error) { 
+        .catch(function (error) {
           if(error.status == 400){ $scope.$emit('error404'); }
           else{
               swal({
@@ -406,17 +406,17 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 // buttons: true,
                 dangerMode: true,
               });
-          } 
+          }
         });
     }else{
-        GroupPerfilService.getGruposXPerfilSLCxId($scope.cardCollection[idx].perspectiva.id)
+        ProgramModuleService.getProgramModuleSLCxId($scope.cardCollection[idx].perspectiva.id)
           .then(function(response){
             if(response.status >= 200 && response.status < 300 ){
               $scope.cardEdit = response.data;
-              $scope.cardEdit.profileSelected = {id: $scope.cardEdit.idAccPerfil};
-              $scope.cardEdit.groupSelected = {id: $scope.cardEdit.idAccGrupo};
+              $scope.cardEdit.programSelected = {id: $scope.cardEdit.idAccPrograma};
+              $scope.cardEdit.moduleSelected = {id: $scope.cardEdit.idAccModulo};
               $scope.actionSelected = action;
-              $('#editModal').modal('show'); 
+              $('#editModal').modal('show');
             }else{
               swal({
                 title: "Atencion",
@@ -427,7 +427,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
               })
             }
           })
-          .catch(function (error) { 
+          .catch(function (error) {
             if(error.status == 400){ $scope.$emit('error404'); }
             else{
                 swal({
@@ -437,21 +437,21 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                   // buttons: true,
                   dangerMode: true,
                 });
-            } 
+            }
           });
     }
   }
 
-  $scope.btnEditPrespectiveModal = function (idx, action){ 
+  $scope.btnEditPrespectiveModal = function (idx, action){
     if($scope.resultType == 'all'){
-      if($scope.prespective == 'grupos'){
-         GroupService.getGrupoxId($scope.cardCollection[idx].perspectiva.id)
+      if($scope.prespective == 'programas'){
+         ProgramService.getProgram($scope.cardCollection[idx].perspectiva.id)
           .then(function(response){
             if(response.status >= 200 && response.status < 300 ){
               $scope.cardEdit = response.data;
-              $scope.relacionados = response.data.accGruposXPerfil;
+              $scope.relacionados = response.data.accProgramasXModulos;
               $scope.actionSelected = action;
-              $('#editPrespectiveGrupoModal').modal('show'); 
+              $('#editPrespectiveProgramaModal').modal('show');
             }else{
               swal({
                 title: "Atencion",
@@ -462,7 +462,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
               })
             }
           })
-          .catch(function (error) { 
+          .catch(function (error) {
             if(error.status == 400){ $scope.$emit('error404'); }
             else{
                 swal({
@@ -472,16 +472,16 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                   // buttons: true,
                   dangerMode: true,
                 });
-            } 
+            }
           });
-      }else if($scope.prespective == 'perfiles'){
-        ProfileService.getPerfilexId($scope.cardCollection[idx].perspectiva.id)
+      }else if($scope.prespective == 'modulos'){
+        ModuloService.getModulo($scope.cardCollection[idx].perspectiva.id)
           .then(function(response){
             if(response.status >= 200 && response.status < 300 ){
               $scope.cardEdit = response.data;
-              $scope.relacionados = response.data.accGruposXPerfil;
+              $scope.relacionados = response.data.accProgramasXModulos;
               $scope.actionSelected = action;
-              $('#editPrespectivePerfilModal').modal('show'); 
+              $('#editPrespectiveModuleModal').modal('show');
             }else{
               swal({
                 title: "Atencion",
@@ -492,7 +492,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
               })
             }
           })
-          .catch(function (error) { 
+          .catch(function (error) {
             if(error.status == 400){ $scope.$emit('error404'); }
             else{
                 swal({
@@ -502,81 +502,81 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                   // buttons: true,
                   dangerMode: true,
                 });
-            } 
+            }
           });
         }
-      }else{
-        if($scope.prespective == 'grupos'){ 
-          GroupService.getGrupoxId($scope.cardCollection[idx].perspectiva.id)
-            .then(function(response){
-              if(response.status >= 200 && response.status < 300 ){
-                $scope.cardEdit = response.data;
-                $scope.relacionados = response.data.accGruposXPerfil;
-                $scope.actionSelected = action;
-                $('#editPrespectiveGrupoModal').modal('show'); 
-              }else{
+    }else{
+      if($scope.prespective == 'programas'){
+        ProgramService.getProgram($scope.cardCollection[idx].perspectiva.id)
+          .then(function(response){
+            if(response.status >= 200 && response.status < 300 ){
+              $scope.cardEdit = response.data;
+              $scope.relacionados = response.data.accProgramasXModulos;
+              $scope.actionSelected = action;
+              $('#editPrespectiveProgramaModal').modal('show');
+            }else{
+              swal({
+                title: "Atencion",
+                text: response.statusText,
+                icon: "warning",
+                buttons: true,
+                // dangerMode: true,
+              })
+            }
+          })
+          .catch(function (error) {
+            if(error.status == 400){ $scope.$emit('error404'); }
+            else{
                 swal({
-                  title: "Atencion",
-                  text: response.statusText,
-                  icon: "warning",
-                  buttons: true,
-                  // dangerMode: true,
-                })
-              }
-            })
-            .catch(function (error) { 
-              if(error.status == 400){ $scope.$emit('error404'); }
-              else{
-                  swal({
-                    title: "ERROR",
-                    text: error.data,
-                    icon: "error",
-                    // buttons: true,
-                    dangerMode: true,
-                  });
-              } 
-            });
-        }else if($scope.prespective == 'perfiles'){
-          ProfileService.getPerfilexId($scope.cardCollection[idx].perspectiva.id)
-            .then(function(response){
-              if(response.status >= 200 && response.status < 300 ){
-                $scope.cardEdit = response.data;
-                $scope.relacionados = response.data.accGruposXPerfil;
-                $scope.actionSelected = action;
-                $('#editPrespectivePerfilModal').modal('show'); 
-              }else{
+                  title: "ERROR",
+                  text: error.data,
+                  icon: "error",
+                  // buttons: true,
+                  dangerMode: true,
+                });
+            }
+          });
+      }else if($scope.prespective == 'modulos'){
+        ModuloService.getModulo($scope.cardCollection[idx].perspectiva.id)
+          .then(function(response){
+            if(response.status >= 200 && response.status < 300 ){
+              $scope.cardEdit = response.data;
+              $scope.relacionados = response.data.accProgramasXModulos;
+              $scope.actionSelected = action;
+              $('#editPrespectiveModuleModal').modal('show');
+            }else{
+              swal({
+                title: "Atencion",
+                text: response.statusText,
+                icon: "warning",
+                buttons: true,
+                // dangerMode: true,
+              })
+            }
+          })
+          .catch(function (error) {
+            if(error.status == 400){ $scope.$emit('error404'); }
+            else{
                 swal({
-                  title: "Atencion",
-                  text: response.statusText,
-                  icon: "warning",
-                  buttons: true,
-                  // dangerMode: true,
-                })
-              }
-            })
-            .catch(function (error) { 
-              if(error.status == 400){ $scope.$emit('error404'); }
-              else{
-                  swal({
-                    title: "ERROR",
-                    text: error.data,
-                    icon: "error",
-                    // buttons: true,
-                    dangerMode: true,
-                  });
-              } 
-            });
-        }
+                  title: "ERROR",
+                  text: error.data,
+                  icon: "error",
+                  // buttons: true,
+                  dangerMode: true,
+                });
+            }
+          });
       }
+    }
   }
 
-  $scope.btnConfirmEdit = function (action){ 
+  $scope.btnConfirmEdit = function (action){
     if(action == 2){
-      GroupPerfilService.putGrupo($scope.cardEdit)
+      ProgramModuleService.putProgramModule($scope.cardEdit)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
             $window.location.reload();
-            $('#editModal').modal('hide'); 
+            $('#editModal').modal('hide');
           }else{
             swal({
               title: "Atencion",
@@ -587,7 +587,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
             })
           }
         })
-        .catch(function (error) { 
+        .catch(function (error) {
           if(error.status == 400){ $scope.$emit('error404'); }
           else{
               swal({
@@ -597,14 +597,14 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 // buttons: true,
                 dangerMode: true,
               });
-          } 
+          }
         });
     }else if(action == 4){
-      GroupPerfilService.putGrupoSLC($scope.cardEdit)
+      ProgramModuleService.putProgramModuleSLC($scope.cardEdit)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
             $window.location.reload();
-            $('#editModal').modal('hide'); 
+            $('#editModal').modal('hide');
           }else{
             swal({
               title: "Atencion",
@@ -615,7 +615,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
             })
           }
         })
-        .catch(function (error) { 
+        .catch(function (error) {
           if(error.status == 400){ $scope.$emit('error404'); }
           else{
               swal({
@@ -625,15 +625,15 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 // buttons: true,
                 dangerMode: true,
               });
-          } 
+          }
         });
     }
   }
 
   $scope.btnFilterActions = function (pparam){
-    $state.go('app.configuration.grupoperfil', {
+    $state.go('app.configuration.programsmodules', {
         param: pparam,
-        prespective: $scope.prespective 
+        prespective: $scope.prespective
     });
   }
 
@@ -642,24 +642,24 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
     $scope.btnFilterActions('all');
   }
 
-  $scope.btnAddCardModal = function (){ 
+  $scope.btnAddCardModal = function (){
     $scope.newModel = {
       descripcion: '',
       codigo: '',
     }
     $scope.loading = false;
-    $('#newModal').modal('show'); 
+    $('#newModal').modal('show');
 
-  } 
+  }
 
-  $scope.btnConfirmNew = function (){ 
+  $scope.btnConfirmNew = function (){
     if(validateNewForm()){
       $scope.loading = true;
       var model = {
-        idAccPerfil: $scope.newModel.profileSelected.id,
-        idAccGrupo: $scope.newModel.groupSelected.id,
+        idAccPrograma: $scope.newModel.programSelected.id,
+        idAccModulo: $scope.newModel.moduleSelected.id,
       }
-      GroupPerfilService.setGruposXPerfilSLC(model)
+      ProgramModuleService.setProgramModuleSLC(model)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
             $scope.loading = false;
@@ -674,7 +674,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
             })
           }
         })
-        .catch(function (error) { 
+        .catch(function (error) {
           if(error.status == 400){ $scope.$emit('error404'); }
           else{
               swal({
@@ -683,7 +683,7 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
                 icon: "error",
                 dangerMode: true,
               });
-          } 
+          }
         });
     }else{
       swal({
@@ -693,9 +693,9 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
         dangerMode: true,
       });
     }
-  } 
+  }
 
-  $scope.btnSearchGroups();
+  $scope.btnSearchPrograms();
 
   function setActions (collection){
     var actionArr = {
@@ -727,13 +727,13 @@ function GrupoperfilCtrl ($scope, $window, $cookies, $location, $stateParams, $s
   function validateNewForm (){
     var rta = true;
 
-    if($scope.newModel.profileSelected == '' || angular.isUndefined($scope.newModel.profileSelected) || $scope.newModel.profileSelected == null) { rta = false;}
-    if($scope.newModel.groupSelected == '' || angular.isUndefined($scope.newModel.groupSelected) || $scope.newModel.groupSelected == null) { rta = false;}
+    if($scope.newModel.programSelected == '' || angular.isUndefined($scope.newModel.programSelected) || $scope.newModel.programSelected == null) { rta = false;}
+    if($scope.newModel.moduleSelected == '' || angular.isUndefined($scope.newModel.moduleSelected) || $scope.newModel.moduleSelected == null) { rta = false;}
 
     return rta;
   }
 
 }
 
-angular.module('mainapp').controller('grupoperfilCtrl', GrupoperfilCtrl);
+angular.module('mainapp').controller('programsmodulesCtrl', ProgramsmodulesCtrl);
 

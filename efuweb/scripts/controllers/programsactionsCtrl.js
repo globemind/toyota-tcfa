@@ -409,7 +409,7 @@ function ProgramsactionsCtrl ($scope, $window, $cookies, $location, $stateParams
           }
         });
     }else{
-        ProgramActionService.getProgramActionSLCxId($scope.cardCollection[idx].id)
+        ProgramActionService.getProgramActionSLCxId($scope.cardCollection[idx].perspectiva.id)
           .then(function(response){
             if(response.status >= 200 && response.status < 300 ){
               $scope.cardEdit = response.data;
@@ -507,7 +507,7 @@ function ProgramsactionsCtrl ($scope, $window, $cookies, $location, $stateParams
         }
     }else{
       if($scope.prespective == 'programas'){
-        ProgramService.getProgramSLC($scope.cardCollection[idx].perspectiva.id)
+        ProgramService.getProgram($scope.cardCollection[idx].perspectiva.id)
           .then(function(response){
             if(response.status >= 200 && response.status < 300 ){
               $scope.cardEdit = response.data;
@@ -536,7 +536,7 @@ function ProgramsactionsCtrl ($scope, $window, $cookies, $location, $stateParams
                 });
             }
           });
-      }else if($scope.prespective == 'perfiles'){
+      }else if($scope.prespective == 'acciones'){
         ActionService.getActionxId($scope.cardCollection[idx].perspectiva.id)
           .then(function(response){
             if(response.status >= 200 && response.status < 300 ){
@@ -600,7 +600,7 @@ function ProgramsactionsCtrl ($scope, $window, $cookies, $location, $stateParams
           }
         });
     }else if(action == 4){
-      ProgramActiosService.putProgramActionSLC($scope.cardEdit)
+      ProgramActionService.putProgramActionSLC($scope.cardEdit)
         .then(function(response){
           if(response.status >= 200 && response.status < 300 ){
             $window.location.reload();

@@ -196,6 +196,28 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
       }
     })
 
+    .state('app.configuration.programsmodules', {
+      url: '/programsmodules/:param/:prespective',
+      controller: 'programsmodulesCtrl',
+      data: {
+        pageTitle: 'Programas por Módulos'
+      },
+      templateUrl: 'views/programsmodules/index.html',
+      resolve: {
+        service: ['$ocLazyLoad', function ($ocLazyLoad) {
+          return $ocLazyLoad.load({
+            serie: true,
+            files: [
+              'scripts/services/programService.js',
+              'scripts/services/moduloService.js',
+              'scripts/services/programmoduleService.js',
+              'scripts/controllers/programsmodulesCtrl.js',
+            ]
+          });
+        }]
+      }
+    })
+
 }]);
 
 angular.module('mainapp').factory('setting', ['$rootScope', function($rootScope) {

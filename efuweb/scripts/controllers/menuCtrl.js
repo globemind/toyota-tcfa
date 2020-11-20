@@ -39,9 +39,9 @@ function MenuCtrl ($scope, $window, $cookies, $location, $rootScope, $state, Use
 		}else if(pprogram == 'pra001'){
 			$state.go('app.configuration.programsactions', { param: pparam, prespective: 'both' });
 		}else if(pprogram == 'pag001'){
-			$state.go('app.configuration.programsactionsgrupos', { param: pparam, prespective: 'both' });
+			$state.go('app.configuration.programsactionsgroups', { param: pparam, prespective: 'both' });
 		}else if(pprogram == 'pxm001'){
-			$state.go('app.configuration.programasmodulos', { param: pparam, prespective: 'both' });
+			$state.go('app.configuration.programsmodules', { param: pparam, prespective: 'both' });
 		}
 	}
 	
