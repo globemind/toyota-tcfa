@@ -218,6 +218,30 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
       }
     })
 
+    .state('app.configuration.programsactionsgroups', {
+      url: '/programsactionsgroups/:param/:prespective',
+      controller: 'programsactionsgroupsCtrl',
+      data: {
+        pageTitle: 'Programas Acciones por Grupos'
+      },
+      templateUrl: 'views/programsactionsgroups/index.html',
+      resolve: {
+        service: ['$ocLazyLoad', function ($ocLazyLoad) {
+          return $ocLazyLoad.load({
+            serie: true,
+            files: [
+              // 'scripts/services/programService.js',
+              // 'scripts/services/actionService.js',
+              'scripts/services/programactionService.js',
+              'scripts/services/groupService.js',
+              'scripts/services/programactiongroupService.js',
+              'scripts/controllers/programsactionsgroupsCtrl.js',
+            ]
+          });
+        }]
+      }
+    })
+
 }]);
 
 angular.module('mainapp').factory('setting', ['$rootScope', function($rootScope) {
