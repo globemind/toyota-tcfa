@@ -39,6 +39,8 @@ function MenuCtrl($scope, $window, $cookies, $location, $rootScope, $state, User
             $state.go('app.insurance.allianzCommission', { param: pparam });
         } else if (pprogram == 'sga003') {
             $state.go('app.insurance.triumphNews', { param: pparam });
+        } else if (pprogram == 'sga004') {
+            $state.go('app.insurance.cajaCartera', { param: pparam });
         } else if (pprogram == 'gxp001') {
             $state.go('app.configuration.grupoperfil', { param: pparam, prespective: 'both' });
         }

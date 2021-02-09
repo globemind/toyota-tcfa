@@ -236,6 +236,26 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
                 }]
             }
         })
+        .state('app.insurance.cajaCartera', {
+            url: '/cajaCartera/:param',
+            controller: 'cajaCarteraCtrl',
+            data: {
+                pageTitle: 'Caja Cartera'
+            },
+            templateUrl: 'views/cajaCartera/index.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'scripts/services/cajaCarteraService.js',
+                            'scripts/controllers/cajaCarteraCtrl.js',
+                        ]
+                    });
+                }]
+            }
+        })
+
 }]);
 
 angular.module('mainapp').factory('setting', ['$rootScope', function($rootScope) {
