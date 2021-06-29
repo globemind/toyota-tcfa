@@ -1,6 +1,6 @@
-angular.module('mainapp').factory('TriumphNewsService', TriumphNewsService);
+angular.module('mainapp').factory('MapfreNewsService', MapfreNewsService);
 
-function TriumphNewsCtrl($scope, $window, $cookies, $location, $stateParams, $state, TriumphNewsService, $filter) {
+function MapfreNewsCtrl($scope, $window, $cookies, $location, $stateParams, $state, MapfreNewsService, $filter) {
 
     if (angular.isUndefined($cookies.getObject('name')) ||
         angular.isUndefined($cookies.getObject('uid')) ||
@@ -18,21 +18,24 @@ function TriumphNewsCtrl($scope, $window, $cookies, $location, $stateParams, $st
 
 
 
-    TriumphNewsService.getFechaMaxima()
+    MapfreNewsService.getFechaMaxima()
         .then(function(response) {
             if (response.status == 200) {
                 //if (response.data[0].vigenciaDesde != "") {
                 if (Object.keys(response.data).length > 0) {
-                    if (response.data[0].vigenciaDesde > $scope.CurrentDate.getDate()) {
-                        $scope.dateFrom = response.data[0].vigenciaDesde;
+                    $scope.dateFrom = new Date();
+                    $scope.dateFrom.setDate($scope.dateFrom.getDate() - 7);
+                    if (response.data[0].fechaEmiSpto > $scope.dateFrom) {
+                        $scope.dateFrom = response.data[0].fechaEmiSpto;
+                        $scope.dateFrom = $filter('date')($scope.dateFrom, 'dd/MM/yyyy');
                     } else {
                         $scope.dateFrom = new Date();
-                        $scope.dateFrom.setDate($scope.dateFrom.getDate() - 30);
+                        $scope.dateFrom.setDate($scope.dateFrom.getDate() - 7);
                         $scope.dateFrom = $filter('date')($scope.dateFrom, 'dd/MM/yyyy');
                     }
                 } else {
                     $scope.dateFrom = new Date();
-                    $scope.dateFrom.setDate($scope.dateFrom.getDate() - 30);
+                    $scope.dateFrom.setDate($scope.dateFrom.getDate() - 7);
                     $scope.dateFrom = $filter('date')($scope.dateFrom, 'dd/MM/yyyy');
                 }
             }
@@ -66,18 +69,18 @@ function TriumphNewsCtrl($scope, $window, $cookies, $location, $stateParams, $st
             $scope.dateTo = $('#dateTo input').val();
             $scope.pDateTo = $scope.convertirFecha($scope.dateTo);
 
-            TriumphNewsService.postTrfNovedad($scope.pDateFrom, $scope.pDateTo)
+            MapfreNewsService.postMapNovedad($scope.pDateFrom, $scope.pDateTo)
                 .then(function(response) {
                     if (response.status == 200) {
                         swal({
                             title: "Procesado",
-                            text: "Se procesaron las novedades de Triunfo Seguros desde " + $scope.dateFrom + " Hasta " + $scope.dateTo,
+                            text: "Se procesaron las novedades de Mapfre Seguros desde " + $scope.dateFrom + " Hasta " + $scope.dateTo,
                             icon: "success",
                             buttons: true,
                             // dangerMode: true,
                         }).then((result) => {
                             if (result) {
-                                TriumphNewsService.getFechaMaxima()
+                                MapfreNewsService.getFechaMaxima()
                                     .then(function(response) {
                                         if (response.status == 200) {
                                             if (response.data[0].vigenciaDesde != "") {
@@ -105,13 +108,14 @@ function TriumphNewsCtrl($scope, $window, $cookies, $location, $stateParams, $st
                     } else if (response.status == 205) {
                         swal({
                             title: "Atencion",
-                            text: "No hay novedades de Triunfo Seguros en el periodo:  desde " + $scope.dateFrom + " Hasta " + $scope.dateTo,
+                            text: "No hay novedades de Mapfre Seguros en el periodo:  desde " + $scope.dateFrom + " Hasta " + $scope.dateTo,
                             icon: "warning",
                             buttons: true,
                             // dangerMode: true,
                         }).then((result) => {
                             if (result) {
                                 //$scope.upload($scope.file);
+                                a = 1;
                             }
                         })
 
@@ -256,4 +260,4 @@ function TriumphNewsCtrl($scope, $window, $cookies, $location, $stateParams, $st
 
 }
 
-angular.module('mainapp').controller('triumphNewsCtrl', TriumphNewsCtrl);
+angular.module('mainapp').controller('mapfreNewsCtrl', MapfreNewsCtrl);

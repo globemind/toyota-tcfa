@@ -255,6 +255,25 @@ angular.module('mainapp').config(['$stateProvider', '$urlRouterProvider', '$tran
                 }]
             }
         })
+        .state('app.insurance.mapfreNews', {
+            url: '/mapfreNews/:param',
+            controller: 'mapfreNewsCtrl',
+            data: {
+                pageTitle: 'Mapfre Novedades'
+            },
+            templateUrl: 'views/mapfreNews/index.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'scripts/services/mapfreNewsService.js',
+                            'scripts/controllers/mapfreNewsCtrl.js',
+                        ]
+                    });
+                }]
+            }
+        })
 
 }]);
 
